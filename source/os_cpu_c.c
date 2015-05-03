@@ -16,11 +16,11 @@
 */
 
 #define  OS_CPU_GLOBALS
-#include <ucos_ii.h>
+#include "includes.h"
 
-#if      OS_VIEW_MODULE > 0
-#include <OS_VIEWc.H>
-#include <OS_VIEW.H>
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
 #endif
 
 #define  ARM_SYS_MODE   (0x0000001FL)
@@ -58,9 +58,7 @@ void  OSInitHookBegin (void)
 #if OS_CPU_HOOKS_EN > 0 && OS_VERSION > 203
 void  OSInitHookEnd (void)
 {
-#if OS_CPU_INT_DIS_MEAS_EN > 0
-    OS_CPU_IntDisMeasInit();
-#endif
+
 }
 #endif
 
@@ -78,11 +76,7 @@ void  OSInitHookEnd (void)
 #if OS_CPU_HOOKS_EN > 0 
 void  OSTaskCreateHook (OS_TCB *ptcb)
 {
-#if OS_VIEW_MODULE > 0
-    OSView_TaskCreateHook(ptcb);
-#else
     (void)ptcb;                        /* Prevent compiler warning                                     */
-#endif
 }
 #endif
 
@@ -259,7 +253,7 @@ void  OSTimeTickHook (void)
 }
 #endif
 
-
+
 /*
 *********************************************************************************************************
 *                             INTERRUPT DISABLE TIME MEASUREMENT, START

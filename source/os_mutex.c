@@ -16,6 +16,11 @@
 #include "includes.h"
 #endif
 
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
+#endif
+
 /*
 *********************************************************************************************************
 *                                            LOCAL CONSTANTS
@@ -92,7 +97,7 @@ INT8U  OSMutexAccept (OS_EVENT *pevent, INT8U *err)
 }
 #endif                                                     
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                  CREATE A MUTUAL EXCLUSION SEMAPHORE
@@ -168,7 +173,7 @@ OS_EVENT  *OSMutexCreate (INT8U prio, INT8U *err)
     return (pevent);
 }
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          DELETE A MUTEX
@@ -273,7 +278,7 @@ OS_EVENT  *OSMutexDel (OS_EVENT *pevent, INT8U opt, INT8U *err)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                  PEND ON MUTUAL EXCLUSION SEMAPHORE
@@ -378,7 +383,7 @@ void  OSMutexPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
     OS_EXIT_CRITICAL();
     *err = OS_NO_ERR;
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                  POST TO A MUTUAL EXCLUSION SEMAPHORE
@@ -455,7 +460,7 @@ INT8U  OSMutexPost (OS_EVENT *pevent)
     OS_EXIT_CRITICAL();
     return (OS_NO_ERR);
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                     QUERY A MUTUAL EXCLUSION SEMAPHORE

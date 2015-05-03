@@ -52,7 +52,7 @@
 
 #define  OS_EVENT_EN       (((OS_Q_EN > 0) && (OS_MAX_QS > 0)) || (OS_MBOX_EN > 0) || (OS_SEM_EN > 0) || (OS_MUTEX_EN > 0))
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                              TASK STATUS (Bit definition for OSTCBStat)
@@ -201,7 +201,7 @@
 #define OS_FLAG_INVALID_OPT     153
 #define OS_FLAG_GRP_DEPLETED    154
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          EVENT CONTROL BLOCK
@@ -289,7 +289,7 @@ typedef struct {
 } OS_MEM_DATA;
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                    MUTUAL EXCLUSION SEMAPHORE DATA
@@ -360,7 +360,7 @@ typedef struct {
 } OS_STK_DATA;
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          TASK CONTROL BLOCK
@@ -410,7 +410,7 @@ typedef struct os_tcb {
 #endif
 } OS_TCB;
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                            GLOBAL VARIABLES
@@ -481,7 +481,7 @@ OS_EXT  volatile  INT32U  OSTime;                   /* Current value of system t
 extern  INT8U  const      OSMapTbl[];               /* Priority->Bit Mask lookup table                 */
 extern  INT8U  const      OSUnMapTbl[];             /* Priority->Index    lookup table                 */
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          FUNCTION PROTOTYPES
@@ -593,7 +593,7 @@ INT8U         OSMutexQuery(OS_EVENT *pevent, OS_MUTEX_DATA *pdata);
 
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         MESSAGE QUEUE MANAGEMENT
@@ -636,7 +636,7 @@ INT8U         OSQQuery(OS_EVENT *pevent, OS_Q_DATA *pdata);
 
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          SEMAPHORE MANAGEMENT
@@ -663,7 +663,7 @@ INT8U         OSSemQuery(OS_EVENT *pevent, OS_SEM_DATA *pdata);
 
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                            TASK MANAGEMENT
@@ -704,10 +704,10 @@ INT8U         OSTaskStkChk(INT8U prio, OS_STK_DATA *pdata);
 #endif
 
 #if OS_TASK_QUERY_EN > 0
-INT8U         OSTaskQuery(INT8U prio, OS_TCB *pdata);
+INT8U		  OSTaskQuery(INT8U prio, OS_TCB *pdata);
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                            TIME MANAGEMENT
@@ -753,7 +753,7 @@ void          OSStatInit(void);
 
 INT16U        OSVersion(void);
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                      INTERNAL FUNCTION PROTOTYPES
@@ -795,7 +795,7 @@ void          OS_TaskStat(void *data);
 
 INT8U         OS_TCBInit(INT8U prio, OS_STK *ptos, OS_STK *pbos, INT16U id, INT32U stk_size, void *pext, INT16U opt);
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          FUNCTION PROTOTYPES
@@ -841,7 +841,7 @@ void          OSCtxSw(void);
 void          OSTickISR(void);
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                   LOOK FOR MISSING #define CONSTANTS

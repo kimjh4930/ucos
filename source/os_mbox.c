@@ -16,6 +16,11 @@
 #include "includes.h"
 #endif
 
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
+#endif
+
 #if OS_MBOX_EN > 0
 /*
 *********************************************************************************************************
@@ -58,7 +63,7 @@ void  *OSMboxAccept (OS_EVENT *pevent)
     return (msg);                                         /* Return the message received (or NULL)     */
 }
 #endif
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        CREATE A MESSAGE MAILBOX
@@ -100,7 +105,7 @@ OS_EVENT  *OSMboxCreate (void *msg)
     }
     return (pevent);                             /* Return pointer to event control block              */
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         DELETE A MAIBOX
@@ -203,7 +208,7 @@ OS_EVENT  *OSMboxDel (OS_EVENT *pevent, INT8U opt, INT8U *err)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                      PEND ON MAILBOX FOR A MESSAGE
@@ -285,7 +290,7 @@ void  *OSMboxPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
     *err = OS_TIMEOUT;                                /* Indicate that a timeout occured               */
     return ((void *)0);                               /* Return a NULL message                         */
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                       POST MESSAGE TO A MAILBOX
@@ -342,7 +347,7 @@ INT8U  OSMboxPost (OS_EVENT *pevent, void *msg)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                       POST MESSAGE TO A MAILBOX
@@ -413,7 +418,7 @@ INT8U  OSMboxPostOpt (OS_EVENT *pevent, void *msg, INT8U opt)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        QUERY A MESSAGE MAILBOX

@@ -16,6 +16,11 @@
 #include "includes.h"
 #endif
 
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
+#endif
+
 #if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
 /*
 *********************************************************************************************************
@@ -96,7 +101,7 @@ OS_MEM  *OSMemCreate (void *addr, INT32U nblks, INT32U blksize, INT8U *err)
     *err                = OS_NO_ERR;
     return (pmem);
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          GET A MEMORY BLOCK
@@ -144,7 +149,7 @@ void  *OSMemGet (OS_MEM *pmem, INT8U *err)
     *err = OS_MEM_NO_FREE_BLKS;                       /* No,  Notify caller of empty memory partition  */
     return ((void *)0);                               /*      Return NULL pointer to caller            */
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         RELEASE A MEMORY BLOCK
@@ -189,7 +194,7 @@ INT8U  OSMemPut (OS_MEM  *pmem, void *pblk)
     OS_EXIT_CRITICAL();
     return (OS_NO_ERR);                          /* Notify caller that memory block was released       */
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          QUERY MEMORY PARTITION
@@ -235,7 +240,7 @@ INT8U  OSMemQuery (OS_MEM *pmem, OS_MEM_DATA *pdata)
     return (OS_NO_ERR);
 }
 #endif                                           /* OS_MEM_QUERY_EN                                    */
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                    INITIALIZE MEMORY PARTITION MANAGER

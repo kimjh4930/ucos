@@ -16,6 +16,11 @@
 #include "includes.h"
 #endif
 
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
+#endif
+
 #if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
 /*
 *********************************************************************************************************
@@ -68,7 +73,7 @@ void  *OSQAccept (OS_EVENT *pevent)
     return (msg);                                /* Return message received (or NULL)                  */
 }
 #endif
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        CREATE A MESSAGE QUEUE
@@ -131,7 +136,7 @@ OS_EVENT  *OSQCreate (void **start, INT16U size)
     }
     return (pevent);
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        DELETE A MESSAGE QUEUE
@@ -246,7 +251,7 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, INT8U opt, INT8U *err)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                           FLUSH QUEUE
@@ -288,7 +293,7 @@ INT8U  OSQFlush (OS_EVENT *pevent)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                     PEND ON A QUEUE FOR A MESSAGE
@@ -375,7 +380,7 @@ void  *OSQPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
     *err = OS_TIMEOUT;                           /* Indicate a timeout occured                         */
     return ((void *)0);                          /* No message received                                */
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        POST MESSAGE TO A QUEUE
@@ -435,7 +440,7 @@ INT8U  OSQPost (OS_EVENT *pevent, void *msg)
     return (OS_NO_ERR);
 }
 #endif
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                   POST MESSAGE TO THE FRONT OF A QUEUE
@@ -498,7 +503,7 @@ INT8U  OSQPostFront (OS_EVENT *pevent, void *msg)
     return (OS_NO_ERR);
 }
 #endif
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        POST MESSAGE TO A QUEUE
@@ -597,7 +602,7 @@ INT8U  OSQPostOpt (OS_EVENT *pevent, void *msg, INT8U opt)
     return (OS_NO_ERR);
 }
 #endif
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                        QUERY A MESSAGE QUEUE
@@ -682,7 +687,7 @@ INT8U  OSQQuery (OS_EVENT *pevent, OS_Q_DATA *pdata)
 }
 #endif                                                     /* OS_Q_QUERY_EN                            */
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                      QUEUE MODULE INITIALIZATION

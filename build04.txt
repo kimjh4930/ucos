@@ -1,0 +1,263 @@
+02:07:30 **** Build of configuration Default for project ucos ****
+make 
+main.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/main.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/main.c -o main.o 
+c:/ndsdev/workspace/ucos/source/main.c: In function 'main':
+c:/ndsdev/workspace/ucos/source/main.c:34:2: warning: implicit declaration of function 'OSInit' [-Wimplicit-function-declaration]
+  OSInit();
+  ^
+os_core.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_core.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_core.c -o os_core.o 
+os_cpu_c.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_cpu_c.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_cpu_c.c -o os_cpu_c.o 
+os_flag.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_flag.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_flag.c -o os_flag.o 
+os_mbox.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_mbox.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_mbox.c -o os_mbox.o 
+os_mem.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_mem.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_mem.c -o os_mem.o 
+os_mutex.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_mutex.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_mutex.c -o os_mutex.o 
+os_q.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_q.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_q.c -o os_q.o 
+os_sem.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_sem.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_sem.c -o os_sem.o 
+os_task.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_task.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_task.c -o os_task.o 
+c:/ndsdev/workspace/ucos/source/os_task.c: In function 'OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:371:19: warning: unused variable 'self' [-Wunused-variable]
+     BOOLEAN       self;
+                   ^
+os_time.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_time.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_time.c -o os_time.o 
+ucos_ii.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/ucos_ii.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/ucos_ii.c -o ucos_ii.o 
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:370:16: error: redefinition of 'struct os_tcb'
+ typedef struct os_tcb {
+                ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:370:16: note: originally defined here
+ typedef struct os_tcb {
+                ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:411:3: error: conflicting types for 'OS_TCB'
+ } OS_TCB;
+   ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:411:3: note: previous declaration of 'OS_TCB' was here
+ } OS_TCB;
+   ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:460:27: error: conflicting types for 'OSTCBCur'
+ OS_EXT  OS_TCB           *OSTCBCur;                        /* Pointer to currently running TCB         */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:460:27: note: previous declaration of 'OSTCBCur' was here
+ OS_EXT  OS_TCB           *OSTCBCur;                        /* Pointer to currently running TCB         */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:461:27: error: conflicting types for 'OSTCBFreeList'
+ OS_EXT  OS_TCB           *OSTCBFreeList;                   /* Pointer to list of free TCBs             */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:461:27: note: previous declaration of 'OSTCBFreeList' was here
+ OS_EXT  OS_TCB           *OSTCBFreeList;                   /* Pointer to list of free TCBs             */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:462:27: error: conflicting types for 'OSTCBHighRdy'
+ OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:462:27: note: previous declaration of 'OSTCBHighRdy' was here
+ OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:463:27: error: conflicting types for 'OSTCBList'
+ OS_EXT  OS_TCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:463:27: note: previous declaration of 'OSTCBList' was here
+ OS_EXT  OS_TCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:464:27: error: conflicting types for 'OSTCBPrioTbl'
+ OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:464:27: note: previous declaration of 'OSTCBPrioTbl' was here
+ OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:465:27: error: conflicting types for 'OSTCBTbl'
+ OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS];   /* Table of TCBs                  */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:465:27: note: previous declaration of 'OSTCBTbl' was here
+ OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS];   /* Table of TCBs                  */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:815:15: error: conflicting types for 'OSTaskCreateHook'
+ void          OSTaskCreateHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:815:15: note: previous declaration of 'OSTaskCreateHook' was here
+ void          OSTaskCreateHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:816:15: error: conflicting types for 'OSTaskDelHook'
+ void          OSTaskDelHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:816:15: note: previous declaration of 'OSTaskDelHook' was here
+ void          OSTaskDelHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:827:15: error: conflicting types for 'OSTCBInitHook'
+ void          OSTCBInitHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:827:15: note: previous declaration of 'OSTCBInitHook' was here
+ void          OSTCBInitHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:0:
+c:/ndsdev/workspace/ucos/source/os_task.c: In function 'OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:371:19: warning: unused variable 'self' [-Wunused-variable]
+     BOOLEAN       self;
+                   ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h: At top level:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:370:16: error: redefinition of 'struct os_tcb'
+ typedef struct os_tcb {
+                ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:370:16: note: originally defined here
+ typedef struct os_tcb {
+                ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:411:3: error: conflicting types for 'OS_TCB'
+ } OS_TCB;
+   ^
+In file included from c:/ndsdev/workspace/ucos/source/os_task.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:411:3: note: previous declaration of 'OS_TCB' was here
+ } OS_TCB;
+   ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:460:27: error: conflicting types for 'OSTCBCur'
+ OS_EXT  OS_TCB           *OSTCBCur;                        /* Pointer to currently running TCB         */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:460:27: note: previous declaration of 'OSTCBCur' was here
+ OS_EXT  OS_TCB           *OSTCBCur;                        /* Pointer to currently running TCB         */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:461:27: error: conflicting types for 'OSTCBFreeList'
+ OS_EXT  OS_TCB           *OSTCBFreeList;                   /* Pointer to list of free TCBs             */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:461:27: note: previous declaration of 'OSTCBFreeList' was here
+ OS_EXT  OS_TCB           *OSTCBFreeList;                   /* Pointer to list of free TCBs             */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:462:27: error: conflicting types for 'OSTCBHighRdy'
+ OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:462:27: note: previous declaration of 'OSTCBHighRdy' was here
+ OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:463:27: error: conflicting types for 'OSTCBList'
+ OS_EXT  OS_TCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:463:27: note: previous declaration of 'OSTCBList' was here
+ OS_EXT  OS_TCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:464:27: error: conflicting types for 'OSTCBPrioTbl'
+ OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:464:27: note: previous declaration of 'OSTCBPrioTbl' was here
+ OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:465:27: error: conflicting types for 'OSTCBTbl'
+ OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS];   /* Table of TCBs                  */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:465:27: note: previous declaration of 'OSTCBTbl' was here
+ OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS];   /* Table of TCBs                  */
+                           ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:815:15: error: conflicting types for 'OSTaskCreateHook'
+ void          OSTaskCreateHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:815:15: note: previous declaration of 'OSTaskCreateHook' was here
+ void          OSTaskCreateHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:816:15: error: conflicting types for 'OSTaskDelHook'
+ void          OSTaskDelHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:816:15: note: previous declaration of 'OSTaskDelHook' was here
+ void          OSTaskDelHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_time.c:18:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:27:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:827:15: error: conflicting types for 'OSTCBInitHook'
+ void          OSTCBInitHook(OS_TCB *ptcb);
+               ^
+In file included from c:/ndsdev/workspace/ucos/source/os_core.c:20:0,
+                 from c:/ndsdev/workspace/ucos/source/ucos_ii.c:19:
+c:/ndsdev/workspace/ucos/source/ucos_ii.h:827:15: note: previous declaration of 'OSTCBInitHook' was here
+ void          OSTCBInitHook(OS_TCB *ptcb);
+               ^
+make[1]: *** [ucos_ii.o] Error 1
+make: *** [build] Error 2
+02:07:33 Build Finished (took 2s.445ms)

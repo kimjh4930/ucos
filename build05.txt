@@ -1,0 +1,247 @@
+02:28:53 **** Build of configuration Default for project ucos ****
+make 
+main.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/main.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/main.c -o main.o 
+c:/ndsdev/workspace/ucos/source/main.c: In function 'main':
+c:/ndsdev/workspace/ucos/source/main.c:34:2: warning: implicit declaration of function 'OSInit' [-Wimplicit-function-declaration]
+  OSInit();
+  ^
+os_core.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_core.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_core.c -o os_core.o 
+os_cpu_c.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_cpu_c.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_cpu_c.c -o os_cpu_c.o 
+os_flag.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_flag.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_flag.c -o os_flag.o 
+os_mbox.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_mbox.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_mbox.c -o os_mbox.o 
+os_mem.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_mem.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_mem.c -o os_mem.o 
+os_mutex.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_mutex.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_mutex.c -o os_mutex.o 
+os_q.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_q.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_q.c -o os_q.o 
+os_sem.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_sem.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_sem.c -o os_sem.o 
+os_task.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_task.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_task.c -o os_task.o 
+c:/ndsdev/workspace/ucos/source/os_task.c: In function 'OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:374:19: warning: unused variable 'self' [-Wunused-variable]
+     BOOLEAN       self;
+                   ^
+os_time.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/os_time.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/os_time.c -o os_time.o 
+ucos_ii.c
+arm-none-eabi-gcc -MMD -MP -MF /c/ndsdev/workspace/ucos/build/ucos_ii.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/c/ndsdev/workspace/ucos/include -I/c/ndsdev/workspace/ucos/build -I/c/ndsdev/devkitPro/libnds/include -I/c/ndsdev/workspace/ucos/build -DARM9 -c /c/ndsdev/workspace/ucos/source/ucos_ii.c -o ucos_ii.o 
+In file included from c:/ndsdev/workspace/ucos/source/ucos_ii.c:26:0:
+c:/ndsdev/workspace/ucos/source/os_task.c: In function 'OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:374:19: warning: unused variable 'self' [-Wunused-variable]
+     BOOLEAN       self;
+                   ^
+linking ucos.elf
+ucos_ii.o: In function `OS_TaskIdle':
+c:/ndsdev/workspace/ucos/source/os_core.c:917: multiple definition of `OS_TaskIdle'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:917: first defined here
+ucos_ii.o: In function `OSIntEnter':
+c:/ndsdev/workspace/ucos/source/os_core.c:151: multiple definition of `OSIntEnter'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:151: first defined here
+ucos_ii.o: In function `OSIntExit':
+c:/ndsdev/workspace/ucos/source/os_core.c:178: multiple definition of `OSIntExit'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:178: first defined here
+ucos_ii.o: In function `OSStart':
+c:/ndsdev/workspace/ucos/source/os_core.c:299: multiple definition of `OSStart'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:299: first defined here
+ucos_ii.o: In function `OSTimeTick':
+c:/ndsdev/workspace/ucos/source/os_core.c:370: multiple definition of `OSTimeTick'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:370: first defined here
+ucos_ii.o: In function `OSVersion':
+c:/ndsdev/workspace/ucos/source/os_core.c:420: multiple definition of `OSVersion'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:420: first defined here
+ucos_ii.o: In function `OS_Dummy':
+c:/ndsdev/workspace/ucos/source/os_core.c:438: multiple definition of `OS_Dummy'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:438: first defined here
+ucos_ii.o: In function `OS_Sched':
+c:/ndsdev/workspace/ucos/source/os_core.c:875: multiple definition of `OS_Sched'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:875: first defined here
+ucos_ii.o: In function `OSStatInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:337: multiple definition of `OSStatInit'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:337: first defined here
+ucos_ii.o: In function `OS_TaskStat':
+c:/ndsdev/workspace/ucos/source/os_core.c:960: multiple definition of `OS_TaskStat'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:960: first defined here
+ucos_ii.o: In function `OS_TCBInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:1041: multiple definition of `OS_TCBInit'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:1041: first defined here
+ucos_ii.o: In function `OSInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:91: multiple definition of `OSInit'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:91: first defined here
+ucos_ii.o: In function `OSTaskChangePrio':
+c:/ndsdev/workspace/ucos/source/os_task.c:45: multiple definition of `OSTaskChangePrio'
+os_task.o:c:/ndsdev/workspace/ucos/source/os_task.c:45: first defined here
+ucos_ii.o: In function `OSTaskCreate':
+c:/ndsdev/workspace/ucos/source/os_task.c:163: multiple definition of `OSTaskCreate'
+os_task.o:c:/ndsdev/workspace/ucos/source/os_task.c:163: first defined here
+ucos_ii.o: In function `OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:362: multiple definition of `OSTaskDel'
+os_task.o:c:/ndsdev/workspace/ucos/source/os_task.c:362: first defined here
+ucos_ii.o: In function `OSTaskDelReq':
+c:/ndsdev/workspace/ucos/source/os_task.c:491: multiple definition of `OSTaskDelReq'
+os_task.o:c:/ndsdev/workspace/ucos/source/os_task.c:491: first defined here
+ucos_ii.o: In function `OSTaskResume':
+c:/ndsdev/workspace/ucos/source/os_task.c:546: multiple definition of `OSTaskResume'
+os_task.o:c:/ndsdev/workspace/ucos/source/os_task.c:546: first defined here
+ucos_ii.o: In function `OSTaskSuspend':
+c:/ndsdev/workspace/ucos/source/os_task.c:674: multiple definition of `OSTaskSuspend'
+os_task.o:c:/ndsdev/workspace/ucos/source/os_task.c:674: first defined here
+ucos_ii.o: In function `OSTimeDly':
+c:/ndsdev/workspace/ucos/source/os_time.c:41: multiple definition of `OSTimeDly'
+os_time.o:c:/ndsdev/workspace/ucos/source/os_time.c:41: first defined here
+ucos_ii.o: In function `OS_TaskIdle':
+c:/ndsdev/workspace/ucos/source/os_core.c:917: multiple definition of `OSUnMapTbl'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:917: first defined here
+ucos_ii.o: In function `OSStart':
+c:/ndsdev/workspace/ucos/source/os_core.c:307: multiple definition of `OSMapTbl'
+os_core.o:c:/ndsdev/workspace/ucos/source/os_core.c:844: first defined here
+os_core.o: In function `OS_TaskIdle':
+c:/ndsdev/workspace/ucos/source/os_core.c:925: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:927: undefined reference to `OS_CPU_SR_Restore'
+os_core.o: In function `OS_TaskStat':
+c:/ndsdev/workspace/ucos/source/os_core.c:975: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:979: undefined reference to `OS_CPU_SR_Restore'
+os_core.o: In function `OSIntExit':
+c:/ndsdev/workspace/ucos/source/os_core.c:185: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:195: undefined reference to `OSIntCtxSw'
+c:/ndsdev/workspace/ucos/source/os_core.c:198: undefined reference to `OS_CPU_SR_Restore'
+os_core.o: In function `OSStart':
+c:/ndsdev/workspace/ucos/source/os_core.c:311: undefined reference to `OSStartHighRdy'
+os_core.o: In function `OSStatInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:344: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:346: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:348: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:351: undefined reference to `OS_CPU_SR_Restore'
+os_core.o: In function `OSTimeTick':
+c:/ndsdev/workspace/ucos/source/os_core.c:377: undefined reference to `OSTimeTickHook'
+c:/ndsdev/workspace/ucos/source/os_core.c:398: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:386: undefined reference to `OS_CPU_SR_Save'
+os_core.o: In function `OS_Sched':
+c:/ndsdev/workspace/ucos/source/os_core.c:882: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:889: undefined reference to `OSCtxSw'
+c:/ndsdev/workspace/ucos/source/os_core.c:892: undefined reference to `OS_CPU_SR_Restore'
+os_core.o: In function `OS_TCBInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:1048: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:1052: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:1099: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:1109: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:1112: undefined reference to `OS_CPU_SR_Restore'
+os_task.o: In function `OSTaskChangePrio':
+c:/ndsdev/workspace/ucos/source/os_task.c:68: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:70: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:74: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:79: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:110: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:115: undefined reference to `OS_CPU_SR_Restore'
+os_task.o: In function `OSTaskCreate':
+c:/ndsdev/workspace/ucos/source/os_task.c:176: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:197: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:180: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:184: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:186: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:191: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:193: undefined reference to `OS_CPU_SR_Restore'
+os_task.o: In function `OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:389: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:417: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:419: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:435: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:439: undefined reference to `OS_CPU_SR_Restore'
+os_task.o: In function `OSTaskDelReq':
+c:/ndsdev/workspace/ucos/source/os_task.c:514: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:522: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:509: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:511: undefined reference to `OS_CPU_SR_Restore'
+os_task.o: In function `OSTaskResume':
+c:/ndsdev/workspace/ucos/source/os_task.c:558: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:572: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:576: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:569: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:561: undefined reference to `OS_CPU_SR_Restore'
+os_task.o: In function `OSTaskSuspend':
+c:/ndsdev/workspace/ucos/source/os_task.c:690: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:708: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:701: undefined reference to `OS_CPU_SR_Restore'
+os_time.o: In function `OSTimeDly':
+c:/ndsdev/workspace/ucos/source/os_time.c:48: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_time.c:53: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OS_TaskIdle':
+c:/ndsdev/workspace/ucos/source/os_core.c:925: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:927: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSIntExit':
+c:/ndsdev/workspace/ucos/source/os_core.c:185: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:195: undefined reference to `OSIntCtxSw'
+c:/ndsdev/workspace/ucos/source/os_core.c:198: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSStart':
+c:/ndsdev/workspace/ucos/source/os_core.c:311: undefined reference to `OSStartHighRdy'
+ucos_ii.o: In function `OSTimeTick':
+c:/ndsdev/workspace/ucos/source/os_core.c:377: undefined reference to `OSTimeTickHook'
+c:/ndsdev/workspace/ucos/source/os_core.c:398: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:386: undefined reference to `OS_CPU_SR_Save'
+ucos_ii.o: In function `OS_Sched':
+c:/ndsdev/workspace/ucos/source/os_core.c:882: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:889: undefined reference to `OSCtxSw'
+c:/ndsdev/workspace/ucos/source/os_core.c:892: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTimeDly':
+c:/ndsdev/workspace/ucos/source/os_time.c:48: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_time.c:53: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSStatInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:344: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:346: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:348: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:351: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OS_TaskStat':
+c:/ndsdev/workspace/ucos/source/os_core.c:975: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:979: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OS_TCBInit':
+c:/ndsdev/workspace/ucos/source/os_core.c:1048: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:1052: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:1099: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_core.c:1109: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_core.c:1112: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTaskCreate':
+c:/ndsdev/workspace/ucos/source/os_task.c:176: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:197: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:180: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:184: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:186: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:191: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:193: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTaskChangePrio':
+c:/ndsdev/workspace/ucos/source/os_task.c:68: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:70: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:74: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:79: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:110: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:115: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTaskDel':
+c:/ndsdev/workspace/ucos/source/os_task.c:389: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:417: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:419: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:435: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:439: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTaskDelReq':
+c:/ndsdev/workspace/ucos/source/os_task.c:514: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:522: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:509: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:511: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTaskResume':
+c:/ndsdev/workspace/ucos/source/os_task.c:558: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:572: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:576: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:569: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:561: undefined reference to `OS_CPU_SR_Restore'
+ucos_ii.o: In function `OSTaskSuspend':
+c:/ndsdev/workspace/ucos/source/os_task.c:690: undefined reference to `OS_CPU_SR_Save'
+c:/ndsdev/workspace/ucos/source/os_task.c:708: undefined reference to `OS_CPU_SR_Restore'
+c:/ndsdev/workspace/ucos/source/os_task.c:701: undefined reference to `OS_CPU_SR_Restore'
+collect2.exe: error: ld returned 1 exit status
+make[1]: *** [/c/ndsdev/workspace/ucos/ucos.elf] Error 1
+make: *** [build] Error 2
+02:28:56 Build Finished (took 3s.347ms)

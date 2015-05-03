@@ -19,6 +19,9 @@
 *********************************************************************************************************
 */
 
+#ifndef _OS_CFG_
+#define _OS_CFG_
+
 #define OS_MAX_EVENTS             2    /* Max. number of event control blocks in your application ...  */
                                        /* ... MUST be > 0                                              */
 #define OS_MAX_FLAGS              5    /* Max. number of Event Flag Groups    in your application ...  */
@@ -112,3 +115,5 @@
 
 
 typedef INT16U             OS_FLAGS;   /* Date type for event flag bits (8, 16 or 32 bits)             */
+
+#endif

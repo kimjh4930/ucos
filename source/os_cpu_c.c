@@ -16,11 +16,17 @@
 */
 
 #define  OS_CPU_GLOBALS
-#include <ucos_ii.h>
+
+#include "includes.h"
 
 #if      OS_VIEW_MODULE > 0
 #include <OS_VIEWc.H>
 #include <OS_VIEW.H>
+#endif
+
+#ifndef _UCOS_II_
+#define _UCOS_II_
+#include "ucos_ii.h"
 #endif
 
 #define  ARM_SYS_MODE   (0x0000001FL)
@@ -259,7 +265,7 @@ void  OSTimeTickHook (void)
 }
 #endif
 
-
+
 /*
 *********************************************************************************************************
 *                             INTERRUPT DISABLE TIME MEASUREMENT, START

@@ -15,6 +15,10 @@
 #ifndef  OS_MASTER_FILE
 #include "includes.h"
 #endif
+#ifndef _UCOS_II_
+#define _UCOS_II_
+#include "ucos_ii.h"
+#endif
 
 /*
 *********************************************************************************************************
@@ -49,7 +53,7 @@ void  OSTimeDly (INT16U ticks)
         OS_Sched();                                                       /* Find next task to run!    */
     }
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                     DELAY TASK FOR SPECIFIED TIME
@@ -109,7 +113,7 @@ INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U milli)
     return (OS_TIME_ZERO_DLY);
 }
 #endif
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         RESUME A DELAYED TASK
@@ -169,7 +173,7 @@ INT8U  OSTimeDlyResume (INT8U prio)
     return (OS_TASK_NOT_EXIST);                            /* The task does not exist                  */
 }
 #endif    
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         GET CURRENT SYSTEM TIME

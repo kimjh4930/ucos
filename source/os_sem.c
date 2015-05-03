@@ -16,6 +16,7 @@
 #include "includes.h"
 #endif
 
+
 #if OS_SEM_EN > 0
 /*
 *********************************************************************************************************
@@ -62,7 +63,7 @@ INT16U  OSSemAccept (OS_EVENT *pevent)
 }
 #endif    
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                           CREATE A SEMAPHORE
@@ -106,7 +107,7 @@ OS_EVENT  *OSSemCreate (INT16U cnt)
     return (pevent);
 }
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         DELETE A SEMAPHORE
@@ -210,7 +211,7 @@ OS_EVENT  *OSSemDel (OS_EVENT *pevent, INT8U opt, INT8U *err)
 }
 #endif
 
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                           PEND ON SEMAPHORE
@@ -286,7 +287,7 @@ void  OSSemPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
     OS_EXIT_CRITICAL();
     *err = OS_NO_ERR;
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                         POST TO A SEMAPHORE
@@ -335,7 +336,7 @@ INT8U  OSSemPost (OS_EVENT *pevent)
     OS_EXIT_CRITICAL();                               /* Semaphore value has reached its maximum       */
     return (OS_SEM_OVF);
 }
-/*$PAGE*/
+/*$PAGE*/
 /*
 *********************************************************************************************************
 *                                          QUERY A SEMAPHORE

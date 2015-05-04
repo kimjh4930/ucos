@@ -104,11 +104,11 @@ OSStartHighRdy:
         MSR     CPSR_cxsf, #0xDF        // Switch to SYS mode with IRQ and FIQ disabled
 
         BL      =OSTaskSwHook            // OSTaskSwHook();
-        LDR     R4, =OS_Running           // OSRunning = TRUE
+        LDR     R4, =OSRunning           // OSRunning = TRUE
         MOV     R5, #1
         STRB    R5, [R4]
                                         // SWITCH TO HIGHEST PRIORITY TASK
-        LDR     R4, =OS_TCBHighRdy       //    Get highest priority task TCB address
+        LDR     R4, =OSTCBHighRdy       //    Get highest priority task TCB address
         LDR     R4, [R4]                //    get stack pointer
         LDR     SP, [R4]                //    switch to the new stack
         LDR     R4,  [SP], #4           //    pop new task's CPSR
@@ -172,17 +172,17 @@ OSCtxSw:
         MRS     R4,  CPSR               //    push current CPSR
         STR     R4,  [SP, #-4]!
 
-        LDR     R4, =OS_TCBCur         // OSTCBCur->OSTCBStkPtr = SP;
+        LDR     R4, =OSTCBCur         // OSTCBCur->OSTCBStkPtr = SP;
         LDR     R5, [R4]
         STR     SP, [R5]
         BL      =OSTaskSwHook            // OSTaskSwHook();
-        LDR     R4, =OS_PrioCur        // OSPrioCur = OSPrioHighRdy
-        LDR     R5, =OS_PrioHighRdy
+        LDR     R4, =OSPrioCur        // OSPrioCur = OSPrioHighRdy
+        LDR     R5, =OSPrioHighRdy
         LDRB    R6, [R5]
         STRB    R6, [R4]
 
-        LDR     R4, =OS_TCBCur         // OSTCBCur  = OSTCBHighRdy;
-        LDR     R6, =OS_TCBHighRdy
+        LDR     R4, =OSTCBCur         // OSTCBCur  = OSTCBHighRdy;
+        LDR     R6, =OSTCBHighRdy
         LDR     R6, [R6]
         STR     R6, [R4]
         LDR     SP, [R6]                // SP = OSTCBHighRdy->OSTCBStkPtr;
@@ -229,13 +229,13 @@ OSCtxSw:
 OSIntCtxSw:
         BL      =OSTaskSwHook            // OSTaskSwHook();
 
-        LDR     R4,=OS_PrioCur         // OSPrioCur = OSPrioHighRdy
-        LDR     R5,=OS_PrioHighRdy
+        LDR     R4,=OSPrioCur         // OSPrioCur = OSPrioHighRdy
+        LDR     R5,=OSPrioHighRdy
         LDRB    R6,[R5]
         STRB    R6,[R4]
 
-        LDR     R4,=OS_TCBCur          // OSTCBCur  = OSTCBHighRdy;
-        LDR     R6,=OS_TCBHighRdy
+        LDR     R4,=OSTCBCur          // OSTCBCur  = OSTCBHighRdy;
+        LDR     R6,=OSTCBHighRdy
         LDR     R6,[R6]
         STR     R6,[R4]
 
@@ -308,7 +308,7 @@ OS_CPU_IRQ_ISR:
         STR     R3,  [SP, #-4]!                //    Push task's CPSR (i.e. IRQ's SPSR)
 
                                                // HANDLE NESTING COUNTER
-        LDR     R0, =OS_IntNesting            // OSIntNesting++;
+        LDR     R0, =OSIntNesting            // OSIntNesting++;
         LDRB    R1, [R0]
         ADD     R1, R1,#1
         STRB    R1, [R0]
@@ -316,7 +316,7 @@ OS_CPU_IRQ_ISR:
         CMP     R1, #1                         // if (OSIntNesting == 1) {
         BNE     OS_CPU_IRQ_ISR_1
 
-        LDR     R4, =OS_TCBCur                //     OSTCBCur->OSTCBStkPtr = SP
+        LDR     R4, =OSTCBCur                //     OSTCBCur->OSTCBStkPtr = SP
         LDR     R5, [R4]
         STR     SP, [R5]                       // }
 
@@ -381,7 +381,7 @@ OS_CPU_FIQ_ISR:
         STMFD   SP!,{R3}                      //    Push task's CPSR (i.e. IRQ's SPSR)
 
                                               // HANDLE NESTING COUNTER
-        LDR     R0,=OS_IntNesting            // OSIntNesting++;
+        LDR     R0,=OSIntNesting            // OSIntNesting++;
         LDRB    R1,[R0]
         ADD     R1,R1,#1
         STRB    R1,[R0]
@@ -389,7 +389,7 @@ OS_CPU_FIQ_ISR:
         CMP     R1,#1                         // if (OSIntNesting == 1) {
         BNE     OS_CPU_FIQ_ISR_1
 
-        LDR     R4,=OS_TCBCur                //     OSTCBCur->OSTCBStkPtr = SP
+        LDR     R4,=OSTCBCur                //     OSTCBCur->OSTCBStkPtr = SP
         LDR     R5,[R4]
         STR     SP,[R5]                       // }
 

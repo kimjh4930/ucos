@@ -374,7 +374,7 @@ void  OSTimeTick (void)
     OS_TCB    *ptcb;
 
 
-    OSTimeTickHook();                                      /* Call user definable hook                 */
+    //OSTimeTickHook();                                      /* Call user definable hook                 */
 #if OS_TIME_GET_SET_EN > 0   
     OS_ENTER_CRITICAL();                                   /* Update the 32-bit tick counter           */
     OSTime++;

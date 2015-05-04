@@ -33,7 +33,7 @@ int main(void) {
 
 	OSInit();
 	//iprintf("\x1b[10;0H OSInit() init");
-	//OSTaskCreate(TaskStart, (void *)0, &TaskStartStk[TASK_STK_SIZE-1],0);
+	OSTaskCreate(TaskStart, (void *)0, &TaskStartStk[TASK_STK_SIZE-1],0);
 	//iprintf("\x1b[10;0H OSTaskCreate() init");
 	//OSStart();
 	//iprintf("\x1b[10;0H OSStart() init");

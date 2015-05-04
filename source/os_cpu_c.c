@@ -18,10 +18,10 @@
 #define  OS_CPU_GLOBALS
 #include "includes.h"
 
-#ifndef UCOS_II
+//#ifndef UCOS_II
 #define UCOS_II
 #include "ucos_ii.h"
-#endif
+//#endif
 
 #define  ARM_SYS_MODE   (0x0000001FL)
 

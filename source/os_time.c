@@ -39,9 +39,9 @@
 
 void  OSTimeDly (INT16U ticks)
 {
-#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
+//#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr;
-#endif    
+//#endif
 
 
     if (ticks > 0) {                                                      /* 0 means no delay!         */

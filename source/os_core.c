@@ -89,9 +89,9 @@ static  void  OS_InitTCBList(void);
 
 void  OSInit (void)
 {
-#if OS_VERSION >= 204
+//#if OS_VERSION >= 204
     OSInitHookBegin();                                           /* Call port specific initialization code   */
-#endif
+//#endif
 
     OS_InitMisc();                                               /* Initialize miscellaneous variables       */
 
@@ -99,26 +99,26 @@ void  OSInit (void)
     OS_InitTCBList();                                            /* Initialize the free list of OS_TCBs      */
     OS_InitEventList();                                          /* Initialize the free list of OS_EVENTs    */
 
-#if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
-    OS_FlagInit();                                               /* Initialize the event flag structures     */
-#endif
+//#if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
+//    OS_FlagInit();                                               /* Initialize the event flag structures     */
+//#endif
 
-#if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
-    OS_MemInit();                                                /* Initialize the memory manager            */
-#endif
-
-#if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
-    OS_QInit();                                                  /* Initialize the message queue structures  */
-#endif
+//#if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
+//    OS_MemInit();                                                /* Initialize the memory manager            */
+//#endif
+//
+//#if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
+//    OS_QInit();                                                  /* Initialize the message queue structures  */
+//#endif
 
     OS_InitTaskIdle();                                           /* Create the Idle Task                     */
-#if OS_TASK_STAT_EN > 0
+//#if OS_TASK_STAT_EN > 0
     OS_InitTaskStat();                                           /* Create the Statistic Task                */
-#endif
+//#endif
 
-#if OS_VERSION >= 204
+//#if OS_VERSION >= 204
     OSInitHookEnd();                                             /* Call port specific init. code            */
-#endif
+//#endif
 }
 /*$PAGE*/
 /*
@@ -915,9 +915,9 @@ void  OS_Sched (void)
 
 void  OS_TaskIdle (void *pdata)
 {
-#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
+//#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr;
-#endif    
+//#endif
     
     
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */

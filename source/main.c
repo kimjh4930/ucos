@@ -1,6 +1,6 @@
 #include <nds.h>
 #include <stdio.h>
-#include "includes.h"
+//#include "includes.h"
 
 //#define TASK_STK_SIZE		512
 //#define N_TASKS				 10

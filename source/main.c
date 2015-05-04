@@ -1,19 +1,24 @@
 #include <nds.h>
 #include <stdio.h>
-//#include "includes.h"
+#include "includes.h"
 
-//#define TASK_STK_SIZE		512
-//#define N_TASKS				 10
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
+#endif
 
-//OS_STK        TaskStk[N_TASKS][TASK_STK_SIZE];        /* Tasks stacks                                  */
-//OS_STK        TaskStartStk[TASK_STK_SIZE];
-//char          TaskData[N_TASKS];
+#define TASK_STK_SIZE		512
+#define N_TASKS				 10
 
-//void  Task(void *data);                       /* Function prototypes of tasks                  */
-//void  TaskStart(void *data);                  /* Function prototypes of Startup task           */
-//static  void  TaskStartCreateTasks(void);
-//static  void  TaskStartDispInit(void);
-//static  void  TaskStartDisp(void);
+OS_STK        TaskStk[N_TASKS][TASK_STK_SIZE];        /* Tasks stacks                                  */
+OS_STK        TaskStartStk[TASK_STK_SIZE];
+char          TaskData[N_TASKS];
+
+void  Task(void *data);                       /* Function prototypes of tasks                  */
+void  TaskStart(void *data);                  /* Function prototypes of Startup task           */
+static  void  TaskStartCreateTasks(void);
+static  void  TaskStartDispInit(void);
+static  void  TaskStartDisp(void);
 
 
 volatile int frame = 0;
@@ -27,13 +32,11 @@ void Vblank() {
 //---------------------------------------------------------------------------------
 int main(void) {
 //---------------------------------------------------------------------------------
-	//touchPosition touchXY;
-	//irqSet(IRQ_VBLANK, Vblank);
-	//consoleClear();
-
+	consoleDemoInit();
+	irqSet(IRQ_VBLANK, Vblank);
 	OSInit();
-	//iprintf("\x1b[10;0H OSInit() init");
-	OSTaskCreate(TaskStart, (void *)0, &TaskStartStk[TASK_STK_SIZE-1],0);
+	iprintf("\x1b[1;0H OSInit() init");
+	//OSTaskCreate(TaskStart, (void *)0, &TaskStartStk[TASK_STK_SIZE-1],0);
 	//iprintf("\x1b[10;0H OSTaskCreate() init");
 	//OSStart();
 	//iprintf("\x1b[10;0H OSStart() init");
@@ -42,6 +45,8 @@ int main(void) {
 
 	while(1) {
 		//TaskStartDispInit();
+		iprintf("\x1b[2;0HFrame = %d",frame);
+		iprintf("\x1b[3;0H OSInit() init");
 	}
 
 	return 0;
@@ -49,16 +54,16 @@ int main(void) {
 
 //void  TaskStart (void *pdata)
 //{
-////#if OS_CRITICAL_METHOD == 3                                /* Allocate storage for CPU status register */
+//#if OS_CRITICAL_METHOD == 3                                /* Allocate storage for CPU status register */
 //    OS_CPU_SR  cpu_sr;
-////#endif
+//#endif
 //    char       s[100];
 //    INT16S     key;
 //
 //
 //   // pdata = pdata;                                         /* Prevent compiler warning                 */
 //
-//    TaskStartDispInit();                                   /* Initialize the display                   */
+//    //TaskStartDispInit();                                   /* Initialize the display                   */
 //
 //    //OS_ENTER_CRITICAL();
 //    //PC_VectSet(0x08, OSTickISR);                           /* Install uC/OS-II's clock tick ISR        */
@@ -69,8 +74,8 @@ int main(void) {
 //
 //    TaskStartCreateTasks();                                /* Create all the application tasks         */
 //
-//    for (;;) {
-//        TaskStartDisp();                                  /* Update the display                       */
+//    //for (;;) {
+//        //TaskStartDisp();                                  /* Update the display                       */
 //
 //
 //        //if (PC_GetKey(&key) == TRUE) {                     /* See if key has been pressed              */
@@ -81,7 +86,7 @@ int main(void) {
 //
 //        //OSCtxSwCtr = 0;                                    /* Clear context switch counter             */
 //       // OSTimeDlyHMSM(0, 0, 1, 0);                         /* Wait one second                          */
-//    }
+//    //}
 //}
 //
 //static void TaskStartDispInit (void){
@@ -110,9 +115,10 @@ int main(void) {
 //
 //
 //    for (;;) {
+//    	iprintf("\x1b[10;0H Task1\n");
 //        //OSSemPend(RandomSem, 0, &err);           /* Acquire semaphore to perform random numbers        */
-//        x = rand()%80;                          /* Find X position where task number will appear      */
-//        y = rand()%16;                          /* Find Y position where task number will appear      */
+//        //x = rand()%80;                          /* Find X position where task number will appear      */
+//        //y = rand()%16;                          /* Find Y position where task number will appear      */
 //        //OSSemPost(RandomSem);                    /* Release semaphore                                  */
 //                                                 /* Display the task number on the screen              */
 //        //PC_DispChar(x, y + 5, *(char *)pdata, DISP_FGND_BLACK + DISP_BGND_LIGHT_GRAY);

@@ -10,25 +10,32 @@
  By      : Jean J. Labrosse
 */
 
-            .extern  OSRunning                    // External references
-            .extern  OSPrioCur
-            .extern  OSPrioHighRdy
-            .extern  OSTCBCur
-            .extern  OSTCBHighRdy
-            .extern  OSIntNesting
-            .extern  OSIntExit
-            .extern  OSTaskSwHook
-            .extern  OS_CPU_IRQ_ISR_Handler
-            .extern  OS_CPU_FIQ_ISR_Handler
+            .extern  	OSRunning                    // External references
+            .extern  	OSPrioCur
+            .extern  	OSPrioHighRdy
+            .extern  	OSTCBCur
+            .extern  	OSTCBHighRdy
+            .extern  	OSIntNesting
+            .extern  	OSIntExit
+            .extern  	OSTaskSwHook
+            .extern  	OS_CPU_IRQ_ISR_Handler
+            .extern  	OS_CPU_FIQ_ISR_Handler
+
+            //.extern	 	TIMER_IR_CLEAR
+            //.extern		TIMER_IR_ENABLE
+            //.extern		OSIntExit
+            .extern		CONFIRM
 
 
-            .globl  OS_CPU_SR_Save               // Functions declared in this file
-            .globl  OS_CPU_SR_Restore
-            .globl  OSStartHighRdy
-            .globl  OSCtxSw
-            .globl  OSIntCtxSw
-            .globl  OS_CPU_IRQ_ISR
-            .globl  OS_CPU_FIQ_ISR
+            .globl  	OS_CPU_SR_Save               // Functions declared in this file
+            .globl  	OS_CPU_SR_Restore
+            .globl 		OSStartHighRdy
+            .globl  	OSCtxSw
+            .globl  	OSIntCtxSw
+            .globl  	OS_CPU_IRQ_ISR
+            .globl  	OS_CPU_FIQ_ISR
+
+            .globl		OSTickISR
 
 
 			.equ	NO_INT,           0xC0                         // Mask used to disable interrupts (Both FIR and IRQ)
@@ -101,6 +108,7 @@ OS_CPU_SR_Restore:
         .code 32
 
 OSStartHighRdy:
+
         MSR     CPSR_cxsf, #0xDF        // Switch to SYS mode with IRQ and FIQ disabled
 
         BL      =OSTaskSwHook            // OSTaskSwHook();
@@ -128,7 +136,6 @@ OSStartHighRdy:
         LDR     R12, [SP], #4
         LDR     LR,  [SP], #4
         LDR     PC,  [SP], #4
-
 
 /*
                          PERFORM A CONTEXT SWITCH (From task level) - OSCtxSw()
@@ -406,24 +413,87 @@ OS_CPU_FIQ_ISR_1:
         LDMFD   SP!,{R4}                      // pop new task's CPSR
         MSR     CPSR_cxsf,r4
         LDMFD   SP!,{R0-R12,LR,PC}            // pop new task's R0-R12,LR & PC
-/*
-                                     POINTERS TO VARIABLES
-                                     DC32 : Generates 32-bit constants
-*/
-        .DATA
 
-//OS_IntNesting:
-//        //DC32    OSIntNesting
-//        //DWORD    OSIntNesting
-//        LDR    OSIntNesting
-//OS_PrioCur:
-//        LDR    OSPrioCur
-//OS_PrioHighRdy:
-//        LDR    OSPrioHighRdy
-//OS_Running:
-//        LDR    OSRunning
-//OS_TCBCur:
-//        LDR    OSTCBCur
-//OS_TCBHighRdy:
-//        DC32    OSTCBHighRdy
-//        .END
+OSTickISR:
+
+		BL		=CONFIRM
+											   // 프로세서 레지스터 저장
+		STR     R3,  [SP, #-4]!                // PUSH WORKING REGISTERS ONTO IRQ STACK
+        STR     R2,  [SP, #-4]!
+        STR     R1,  [SP, #-4]!
+
+        MOV     R1, SP                         // Save   IRQ stack pointer
+
+        ADD     SP, SP,#12                     // Adjust IRQ stack pointer
+
+        SUB     R2, LR,#4                      // Adjust PC for return address to task
+
+        MRS     R3, SPSR                       // Copy SPSR (i.e. interrupted task's CPSR) to R3
+
+        MSR     CPSR_c, #(NO_INT | SYS32_MODE) // Change to SYS mode
+                                               // SAVE TASK'S CONTEXT ONTO TASK'S STACK
+        STR     R2,  [SP, #-4]!                //    Push task's Return PC
+        STR     LR,  [SP, #-4]!                //    Push task's LR
+        STR     R12, [SP, #-4]!                //    Push task's R12-R4
+        STR     R11, [SP, #-4]!
+        STR     R10, [SP, #-4]!
+        STR     R9,  [SP, #-4]!
+        STR     R8,  [SP, #-4]!
+        STR     R7,  [SP, #-4]!
+        STR     R6,  [SP, #-4]!
+        STR     R5,  [SP, #-4]!
+        STR     R4,  [SP, #-4]!
+
+        LDR     R4,  [R1], #4                  //    Move task's R1-R3 from IRQ stack to SYS stack
+        LDR     R5,  [R1], #4
+        LDR     R6,  [R1], #4
+        STR     R6,  [SP, #-4]!
+        STR     R5,  [SP, #-4]!
+        STR     R4,  [SP, #-4]!
+
+        STR     R0,  [SP, #-4]!                //    Push task's R0    onto task's stack
+        STR     R3,  [SP, #-4]!                //    Push task's CPSR (i.e. IRQ's SPSR)
+
+		LDR	R0, =OSIntNesting	//OSIntNesting++;
+		LDRB	R1, [R0]
+		ADD	R1, R1,#1
+		STRB	R1, [R0]
+
+		CMP	R1, #1			//if(OSIntNesting == 1){
+		BNE	OS_CPU_IRQ_ISR_1
+
+		LDR	R4, =OSTCBCur		//OSTCBCur->OSTCBStkPtr = SP
+		LDR	R5, [R4]
+		STR	SP, [R5]		//}
+
+		BL	=OSTimeTick			//OSTimeTick()호출
+		BL	=TIMER_IRQ_CLEAR	//인터럽트 발생장치 클리어
+		BL	=TIMER_IRQ_ENABLE	//인터럽트 재활성화(선택)
+		BL	=OSIntExit
+						//레지스터 복구
+		MSR     CPSR_c, #(NO_INT | IRQ32_MODE) // Change to IRQ mode (to use the IRQ stack to handle interrupt)
+
+        BL      =OS_CPU_IRQ_ISR_Handler         // OS_CPU_IRQ_ISR_Handler();
+
+        MSR     CPSR_c, #(NO_INT | SYS32_MODE) // Change to SYS mode
+
+        BL      OSIntExit                     // OSIntExit();
+
+                                              // RESTORE TASK'S CONTEXT and RETURN TO TASK
+        LDR     R4,  [SP], #4                 //    pop new task's CPSR
+        MSR     CPSR_cxsf, R4
+        LDR     R0,  [SP], #4                 //    pop new task's context
+        LDR     R1,  [SP], #4
+        LDR     R2,  [SP], #4
+        LDR     R3,  [SP], #4
+        LDR     R4,  [SP], #4
+        LDR     R5,  [SP], #4
+        LDR     R6,  [SP], #4
+        LDR     R7,  [SP], #4
+        LDR     R8,  [SP], #4
+        LDR     R9,  [SP], #4
+        LDR     R10, [SP], #4
+        LDR     R11, [SP], #4
+        LDR     R12, [SP], #4
+        LDR     LR,  [SP], #4
+        LDR     PC,  [SP], #4

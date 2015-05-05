@@ -304,20 +304,15 @@ void  OSStart (void)
 
 
     if (OSRunning == FALSE) {
-    	//printf("OSRunning : False\n");
         y             = OSUnMapTbl[OSRdyGrp];        /* Find highest priority's task priority number   */
         x             = OSUnMapTbl[OSRdyTbl[y]];
         OSPrioHighRdy = (INT8U)((y << 3) + x);
-        printf("OSPrioHighRdy : %d\n",OSPrioHighRdy);
         OSPrioCur     = OSPrioHighRdy;
-        printf("OSPrioCur : %d\n",OSPrioCur);
         OSTCBHighRdy  = OSTCBPrioTbl[OSPrioHighRdy]; /* Point to highest priority task ready to run    */
-        printf("OSTCBHighRdy : %d\n",OSTCBHighRdy);
         OSTCBCur      = OSTCBHighRdy;
-        printf("OSTCBCur : %d\n",OSTCBCur);
         OSStartHighRdy();                            /* Execute target specific code to start task     */
         //OSStartHighRdy()
-        //실행할 태스크의 스택으로부터 레지스터들을 복구하고 인터럽ㅇ트 복귀 명령을 수행하여 태스크의 코드를 실행한다.
+        //실행할 태스크의 스택으로부터 레지스터들을 복구하고 인터럽트 복귀 명령을 수행하여 태스크의 코드를 실행한다.
         //OSStart() 함수로 돌아오지 않는다.
     }
 }
@@ -933,6 +928,7 @@ void  OS_TaskIdle (void *pdata)
 #endif
     
     printf("OS_TaskIdle Init\n");
+    printf("confirm = %d\n",confirm);
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
     for (;;) {
         OS_ENTER_CRITICAL();

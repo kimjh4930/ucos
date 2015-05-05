@@ -201,6 +201,8 @@
 #define OS_FLAG_INVALID_OPT     153
 #define OS_FLAG_GRP_DEPLETED    154
 
+
+
 /*$PAGE*/
 /*
 *********************************************************************************************************
@@ -463,6 +465,7 @@ OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest
 OS_EXT  OS_TCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */
 OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */
 OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS];   /* Table of TCBs                  */
+static	INT8U			  confirm=0;
 
 #if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
 OS_EXT  OS_MEM           *OSMemFreeList;            /* Pointer to free list of memory partitions       */
@@ -1146,3 +1149,11 @@ void          OSTickISR(void);
 #ifndef OS_SCHED_LOCK_EN
 #error  "OS_CFG.H, Missing OS_SCHED_LOCK_EN: Include code for OSSchedLock() and OSSchedUnlock()"
 #endif
+
+
+//¼öÁ¤
+//void	OSTickISR(void);
+void	CONFIRM(void);
+//void	TIMER_IR_CLEAR(void);
+//void	TIMER_IR_ENABLE(void);
+

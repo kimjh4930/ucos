@@ -81,6 +81,11 @@ void  OSTimeDly (INT16U ticks)
 */
 
 #if OS_TIME_DLY_HMSM_EN > 0
+/*
+ * 태스크 지연 OSTimeDly 함수는 지연 시간을 틱 단위로 사용해야한다.
+ * 시간을 틱 단위가 아닌 Hour, Minute, Second, millisecond 단위로 지정할 수 있음.
+ * 65535틱 이상의 시간동안 지연 중일 경우, OSTimeDlyResume() 함수에서 재개될 수 없음.
+ */
 INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U milli)
 {
     INT32U ticks;
@@ -99,6 +104,8 @@ INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U milli)
         }
                                                  /* Compute the total number of clock ticks required.. */
                                                  /* .. (rounded to the nearest tick)                   */
+
+        //uCOS-II 에서는 65,535틱까지의 지연만 지원
         ticks = ((INT32U)hours * 3600L + (INT32U)minutes * 60L + (INT32U)seconds) * OS_TICKS_PER_SEC
               + OS_TICKS_PER_SEC * ((INT32U)milli + 500L / OS_TICKS_PER_SEC) / 1000L;
         loops = (INT16U)(ticks / 65536L);        /* Compute the integral number of 65536 tick delays   */
@@ -140,6 +147,10 @@ INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U milli)
 */
 
 #if OS_TIME_DLY_RESUME_EN > 0
+/*
+ * 지연하고 있는 태스크를 재개하는 기능.
+ * 지정된 지연 시간이 만료되는 것이 아닌, 다른 태스크가 시간지연을 취소해서 지연 중인 태스크를 다시 준비상태로 만들 수 있음.
+ */
 INT8U  OSTimeDlyResume (INT8U prio)
 {
 #if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
@@ -228,4 +239,4 @@ void  OSTimeSet (INT32U ticks)
     OSTime = ticks;
     OS_EXIT_CRITICAL();
 }
-#endif    
+#endif

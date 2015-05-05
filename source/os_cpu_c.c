@@ -114,6 +114,7 @@ void  OSTaskDelHook (OS_TCB *ptcb)
 #if OS_CPU_HOOKS_EN > 0 && OS_VERSION >= 251
 void  OSTaskIdleHook (void)
 {
+	//printf("OSTaskIdleHook Init\n");
 }
 #endif
 
@@ -247,6 +248,7 @@ void  OSTCBInitHook (OS_TCB *ptcb)
 #if (OS_CPU_HOOKS_EN > 0) && (OS_TIME_TICK_HOOK_EN > 0)
 void  OSTimeTickHook (void)
 {
+	//시스템 틱 인터럽트가 발생할 때마다 OSTimeTick() 함수가 호출됨
 #if OS_VIEW_MODULE > 0
     OSView_TickHook();
 #endif

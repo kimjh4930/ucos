@@ -13,7 +13,7 @@
 */
 
 #ifndef  OS_MASTER_FILE
-#include "INCLUDES.H"
+#include "includes.h"
 #endif
 
 //#ifndef UCOS_II

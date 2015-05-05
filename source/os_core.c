@@ -89,9 +89,9 @@ static  void  OS_InitTCBList(void);
 
 void  OSInit (void)
 {
-//#if OS_VERSION >= 204
+#if OS_VERSION >= 204
     OSInitHookBegin();                                           /* Call port specific initialization code   */
-//#endif
+#endif
 
     OS_InitMisc();                                               /* Initialize miscellaneous variables       */
 
@@ -99,26 +99,26 @@ void  OSInit (void)
     OS_InitTCBList();                                            /* Initialize the free list of OS_TCBs      */
     OS_InitEventList();                                          /* Initialize the free list of OS_EVENTs    */
 
-//#if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
-//    OS_FlagInit();                                               /* Initialize the event flag structures     */
-//#endif
+#if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
+    OS_FlagInit();                                               /* Initialize the event flag structures     */
+#endif
 
-//#if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
-//    OS_MemInit();                                                /* Initialize the memory manager            */
-//#endif
-//
-//#if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
-//    OS_QInit();                                                  /* Initialize the message queue structures  */
-//#endif
+#if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
+    OS_MemInit();                                                /* Initialize the memory manager            */
+#endif
+
+#if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
+    OS_QInit();                                                  /* Initialize the message queue structures  */
+#endif
 
     OS_InitTaskIdle();                                           /* Create the Idle Task                     */
-//#if OS_TASK_STAT_EN > 0
+#if OS_TASK_STAT_EN > 0
     OS_InitTaskStat();                                           /* Create the Statistic Task                */
-//#endif
+#endif
 
-//#if OS_VERSION >= 204
+#if OS_VERSION >= 204
     OSInitHookEnd();                                             /* Call port specific init. code            */
-//#endif
+#endif
 }
 /*$PAGE*/
 /*
@@ -299,16 +299,26 @@ void  OSStart (void)
 {
     INT8U y;
     INT8U x;
+    printf("init OSStart()\n");
+
 
 
     if (OSRunning == FALSE) {
+    	//printf("OSRunning : False\n");
         y             = OSUnMapTbl[OSRdyGrp];        /* Find highest priority's task priority number   */
         x             = OSUnMapTbl[OSRdyTbl[y]];
         OSPrioHighRdy = (INT8U)((y << 3) + x);
+        printf("OSPrioHighRdy : %d\n",OSPrioHighRdy);
         OSPrioCur     = OSPrioHighRdy;
+        printf("OSPrioCur : %d\n",OSPrioCur);
         OSTCBHighRdy  = OSTCBPrioTbl[OSPrioHighRdy]; /* Point to highest priority task ready to run    */
+        printf("OSTCBHighRdy : %d\n",OSTCBHighRdy);
         OSTCBCur      = OSTCBHighRdy;
+        printf("OSTCBCur : %d\n",OSTCBCur);
         OSStartHighRdy();                            /* Execute target specific code to start task     */
+        //OSStartHighRdy()
+        //실행할 태스크의 스택으로부터 레지스터들을 복구하고 인터럽ㅇ트 복귀 명령을 수행하여 태스크의 코드를 실행한다.
+        //OSStart() 함수로 돌아오지 않는다.
     }
 }
 /*$PAGE*/
@@ -873,6 +883,7 @@ static  void  OS_InitTCBList (void)
 
 void  OS_Sched (void)
 {
+	printf("init OS_Sched\n");
 #if OS_CRITICAL_METHOD == 3                            /* Allocate storage for CPU status register     */
     OS_CPU_SR  cpu_sr;
 #endif    
@@ -886,7 +897,9 @@ void  OS_Sched (void)
         if (OSPrioHighRdy != OSPrioCur) {              /* No Ctx Sw if current task is highest rdy     */
             OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
             OSCtxSwCtr++;                              /* Increment context switch counter             */
+            printf("before OS_TASK_SW()\n");
             OS_TASK_SW();                              /* Perform a context switch                     */
+            printf("after OS_TASK_SW()\n");
         }
     }
     OS_EXIT_CRITICAL();
@@ -915,11 +928,11 @@ void  OS_Sched (void)
 
 void  OS_TaskIdle (void *pdata)
 {
-//#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
+#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr;
-//#endif
+#endif
     
-    
+    printf("OS_TaskIdle Init\n");
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
     for (;;) {
         OS_ENTER_CRITICAL();

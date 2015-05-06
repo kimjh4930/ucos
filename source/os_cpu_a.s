@@ -35,7 +35,7 @@
             .globl  	OS_CPU_IRQ_ISR
             .globl  	OS_CPU_FIQ_ISR
 
-            .globl		OSTickISR
+            //.globl		OSTickISR
 
 
 			.equ	NO_INT,           0xC0                         // Mask used to disable interrupts (Both FIR and IRQ)

@@ -24,13 +24,13 @@ void Vblank() {
 int main(void) {
 //---------------------------------------------------------------------------------
 
-	irqInit();	//인터럽트 벡터 설치
+	//irqInit();	//인터럽트 벡터 설치
 
 	consoleDemoInit();
 	irqSet(IRQ_VBLANK, Vblank);
 	OSInit();
 	iprintf("\x1b[1;0H ----OSInit() init----\n");
-	OSTaskCreate(TestTask, (void*)0, &TestTaskStk[99],0);
+	OSTaskCreate(TestTask, (void*)0, &TestTaskStk[99],5);
 	//OSTaskCreate(TestTask2, (void*)0, &TestTaskStk[99],0);
 	//iprintf("\x1b[10;0H OSTaskCreate() init");
 	OSStart();
@@ -41,9 +41,9 @@ int main(void) {
 void TestTask (void *pdata){
 	//pdata = pdata;
 
-	printf("TestTask1 Init before while\n");
+	//printf("TestTask1 Init before while\n");
 
-	timerStart(1, ClockDivider_1024, 20, (void *)OSTickISR);
+	//timerStart(1, ClockDivider_1024, 20, (void *)OSTickISR);
 
 	while(1){
 		printf("TestTask1 Init\n");
@@ -63,12 +63,12 @@ void TestTask2 (void *pdata){
 }
 
 void TIMER_IR_CLEAR(void){
-	printf("Clear init\n");
+	//printf("Clear init\n");
 	irqClear(IRQ_TIMER3);
 }
 
 void TIMER_IR_ENABLE(void){
-	printf("enable init\n");
+	//printf("enable init\n");
 	irqEnable(IRQ_VCOUNT);
 }
 

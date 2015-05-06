@@ -110,7 +110,6 @@ OS_CPU_SR_Restore:
 OSStartHighRdy:
 
         MSR     CPSR_cxsf, #0xDF        // Switch to SYS mode with IRQ and FIQ disabled
-
         BL      =OSTaskSwHook            // OSTaskSwHook();
         LDR     R4, =OSRunning           // OSRunning = TRUE
         MOV     R5, #1
@@ -416,7 +415,7 @@ OS_CPU_FIQ_ISR_1:
 
 OSTickISR:
 
-		BL		=CONFIRM
+		//BL		=CONFIRM
 											   // 프로세서 레지스터 저장
 		STR     R3,  [SP, #-4]!                // PUSH WORKING REGISTERS ONTO IRQ STACK
         STR     R2,  [SP, #-4]!

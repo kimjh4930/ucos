@@ -192,6 +192,7 @@ void  OSIntExit (void)
             if (OSPrioHighRdy != OSPrioCur) {              /* No Ctx Sw if current task is highest rdy */
                 OSTCBHighRdy  = OSTCBPrioTbl[OSPrioHighRdy];
                 OSCtxSwCtr++;                              /* Keep track of the number of ctx switches */
+                printf("before OSIntCtxSw\n");
                 OSIntCtxSw();                              /* Perform interrupt level ctx switch       */
             }
         }

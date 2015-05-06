@@ -31,7 +31,7 @@ int main(void) {
 	OSInit();
 	iprintf("\x1b[1;0H ----OSInit() init----\n");
 	OSTaskCreate(TestTask, (void*)0, &TestTaskStk[99],0);
-	OSTaskCreate(TestTask2, (void*)0, &TestTaskStk[99],0);
+	//OSTaskCreate(TestTask2, (void*)0, &TestTaskStk[99],0);
 	//iprintf("\x1b[10;0H OSTaskCreate() init");
 	OSStart();
 
@@ -43,7 +43,7 @@ void TestTask (void *pdata){
 
 	printf("TestTask1 Init before while\n");
 
-	timerStart(1, ClockDivider_1024, 1, (void *)OSTickISR);
+	timerStart(1, ClockDivider_1024, 20, (void *)OSTickISR);
 
 	while(1){
 		printf("TestTask1 Init\n");

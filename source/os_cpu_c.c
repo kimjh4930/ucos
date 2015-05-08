@@ -114,6 +114,7 @@ void  OSTaskDelHook (OS_TCB *ptcb)
 #if OS_CPU_HOOKS_EN > 0 && OS_VERSION >= 251
 void  OSTaskIdleHook (void)
 {
+	OS_Sched();
 	//printf("OSTaskIdleHook Init\n");
 }
 #endif

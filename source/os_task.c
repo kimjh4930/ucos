@@ -373,8 +373,6 @@ INT8U  OSTaskDel (INT8U prio)
     OS_TCB       *ptcb;
     BOOLEAN       self;
 
-
-
     if (OSIntNesting > 0) {                                     /* See if trying to delete from ISR    */
         return (OS_TASK_DEL_ISR);
     }

@@ -43,7 +43,7 @@ void  OSTimeDly (INT16U ticks)
     OS_CPU_SR  cpu_sr;
 #endif
 
-
+    //printf("ticks : %d\n", ticks);
     if (ticks > 0) {                                                      /* 0 means no delay!         */
         OS_ENTER_CRITICAL();
         if ((OSRdyTbl[OSTCBCur->OSTCBY] &= ~OSTCBCur->OSTCBBitX) == 0) {  /* Delay current task        */

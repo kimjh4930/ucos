@@ -880,7 +880,7 @@ static  void  OS_InitTCBList (void)
 
 void  OS_Sched (void)
 {
-	printf("init OS_Sched\n");
+	//printf("init OS_Sched\n");
 #if OS_CRITICAL_METHOD == 3                            /* Allocate storage for CPU status register     */
     OS_CPU_SR  cpu_sr;
 #endif    

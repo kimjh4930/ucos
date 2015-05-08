@@ -42,6 +42,9 @@
 
 #if OS_TASK_CHANGE_PRIO_EN > 0
 INT8U  OSTaskChangePrio (INT8U oldprio, INT8U newprio)
+/* 태스크 우선순위 변경
+*  런타임시 함수를 호출해서 동적으로 변경할 수 있음.
+*/
 {
 #if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR    cpu_sr;
@@ -60,30 +63,30 @@ INT8U  OSTaskChangePrio (INT8U oldprio, INT8U newprio)
 
 
 #if OS_ARG_CHK_EN > 0
-    if ((oldprio >= OS_LOWEST_PRIO && oldprio != OS_PRIO_SELF)  ||
+    if ((oldprio >= OS_LOWEST_PRIO && oldprio != OS_PRIO_SELF)  || /* Idle Task의 우선순위를 변경할 수 없음.*/
          newprio >= OS_LOWEST_PRIO) {
         return (OS_PRIO_INVALID);
     }
 #endif
     OS_ENTER_CRITICAL();
-    if (OSTCBPrioTbl[newprio] != (OS_TCB *)0) {                 /* New priority must not already exist */
+    if (OSTCBPrioTbl[newprio] != (OS_TCB *)0) {                 /* 새 우선순위가 비어있는지 검사 */
         OS_EXIT_CRITICAL();
         return (OS_PRIO_EXIST);
     } else {
-        OSTCBPrioTbl[newprio] = (OS_TCB *)1;                    /* Reserve the entry to prevent others */
-        OS_EXIT_CRITICAL();
-        y    = newprio >> 3;                                    /* Precompute to reduce INT. latency   */
+        OSTCBPrioTbl[newprio] = (OS_TCB *)1;                    /* 새 우선순위가 비어있다면 OSTCBPrioTbl[newprio]에 임시 값을 넣어, 해당 우선순위를 예약 */
+        OS_EXIT_CRITICAL();										/* 여기서부터 인터럽트를 활성화해서 다른 태스크가 이 우선순위에 대해 태스크를 생성하거나 우선순위 변경을 요청해도 문제가 발생하지 않음.*/
+        y    = newprio >> 3;                                    /* TCB내에 저장할 값을 미리 계산 */
         bity = OSMapTbl[y];
         x    = newprio & 0x07;
         bitx = OSMapTbl[x];
         OS_ENTER_CRITICAL();
-        if (oldprio == OS_PRIO_SELF) {                          /* See if changing self                */
+        if (oldprio == OS_PRIO_SELF) {                          /* 현재 태스크가 자신의 우선순위를 변경하려 하는 것인지 검사.                */
             oldprio = OSTCBCur->OSTCBPrio;                      /* Yes, get priority                   */
         }
         ptcb = OSTCBPrioTbl[oldprio];
-        if (ptcb != (OS_TCB *)0) {                              /* Task to change must exist           */
-            OSTCBPrioTbl[oldprio] = (OS_TCB *)0;                /* Remove TCB from old priority        */
-            if ((OSRdyTbl[ptcb->OSTCBY] & ptcb->OSTCBBitX) != 0x00) {  /* If task is ready make it not */
+        if (ptcb != (OS_TCB *)0) {                              /* 요청하는 우선순위에 태스크가 존재하는지 검사          */
+            OSTCBPrioTbl[oldprio] = (OS_TCB *)0;                /* 기존 우선순위에 NULL 값을 넣음.       */
+            if ((OSRdyTbl[ptcb->OSTCBY] & ptcb->OSTCBBitX) != 0x00) {  /* 우선순위를 바꾸고자 하는 태스크가 실행 준비상태인지 검사 */
                 if ((OSRdyTbl[ptcb->OSTCBY] &= ~ptcb->OSTCBBitX) == 0x00) {
                     OSRdyGrp &= ~ptcb->OSTCBBitY;
                 }
@@ -111,7 +114,7 @@ INT8U  OSTaskChangePrio (INT8U oldprio, INT8U newprio)
             OS_Sched();                                         /* Run highest priority task ready     */
             return (OS_NO_ERR);
         } else {
-            OSTCBPrioTbl[newprio] = (OS_TCB *)0;                /* Release the reserved prio.          */
+            OSTCBPrioTbl[newprio] = (OS_TCB *)0;                /* 요청하는 우선순위에 태스크가 존재하지 않으면 OSTCBPrioTbl[] 배열에 임의의 값을 미리 넣어서 예약해 두었던 새로운 우선순위에 대한 권리르 반납하고 에러코드 반환  */
             OS_EXIT_CRITICAL();
             return (OS_PRIO_ERR);                               /* Task to change didn't exist         */
         }
@@ -157,7 +160,10 @@ INT8U  OSTaskChangePrio (INT8U oldprio, INT8U newprio)
 *                               (i.e. >= OS_LOWEST_PRIO)
 *********************************************************************************************************
 */
-
+	//첫번째 인자 : 생성하고자 하는 태스크의 시작번지
+	//두번째 인자 : pdata를 생성하려는 태스크로 넘겨줄 전달인자
+	//세번쨰 인자 : 생성하고자 하는 태스크에 할당한 스택 사용 시작 번지
+	//네번째 인자 : 우선순위
 #if OS_TASK_CREATE_EN > 0
 INT8U  OSTaskCreate (void (*task)(void *pd), void *pdata, OS_STK *ptos, INT8U prio)
 {
@@ -169,27 +175,27 @@ INT8U  OSTaskCreate (void (*task)(void *pd), void *pdata, OS_STK *ptos, INT8U pr
 
 
 #if OS_ARG_CHK_EN > 0
-    if (prio > OS_LOWEST_PRIO) {             /* Make sure priority is within allowable range           */
+    if (prio > OS_LOWEST_PRIO) {             /* 지정한 태스크의 우선순위가 합당한 값인지 검사           */
         return (OS_PRIO_INVALID);
     }
 #endif
     OS_ENTER_CRITICAL();
-    if (OSTCBPrioTbl[prio] == (OS_TCB *)0) { /* Make sure task doesn't already exist at this priority  */
-        OSTCBPrioTbl[prio] = (OS_TCB *)1;    /* Reserve the priority to prevent others from doing ...  */
+    if (OSTCBPrioTbl[prio] == (OS_TCB *)0) { /* 해당하는 태스크의 우선순위가 이미 있는지 확인. 동일한 우선순위의 태스크가 존재하면 안됨.  */
+        OSTCBPrioTbl[prio] = (OS_TCB *)1;    /*지정한 우선순위에 해당 태스크가 없는 상태면 OSTCBPrioTbl[]에 임시로 넣어 같은 우선순위로 태스크가 생성될 수 없도록 예약  */
                                              /* ... the same thing until task is created.              */
-        OS_EXIT_CRITICAL();
-        psp = (OS_STK *)OSTaskStkInit(task, pdata, ptos, 0);    /* Initialize the task's stack         */
-        err = OS_TCBInit(prio, psp, (OS_STK *)0, 0, 0, (void *)0, 0);
+        OS_EXIT_CRITICAL();					 /*여기서부터 다른 태스크가 호출한 OSTaskCreate() 함수가 동작 가능. 같은 우선순위로 태스크 생성은 불가능.*/
+        psp = (OS_STK *)OSTaskStkInit(task, pdata, ptos, 0);    /* 새로운 스택 시작번지를 return. 이 값은 태스크 컨트롤 블록에 저장됨*/
+        err = OS_TCBInit(prio, psp, (OS_STK *)0, 0, 0, (void *)0, 0);	/*자유 OS_TCB풀로부터 OS_TCB를 하나 할당 받아 초기화함.*/
         if (err == OS_NO_ERR) {
             OS_ENTER_CRITICAL();
-            OSTaskCtr++;                                        /* Increment the #tasks counter        */
+            OSTaskCtr++;                     /* OS_TCBInit()의 리턴 코드 점검. 리턴 코드가 정사이면 생성된 태스크 수를관리하기 위해서 OSTaskCtr을 증가.        */
             OS_EXIT_CRITICAL();
             if (OSRunning == TRUE) {         /* Find highest priority task if multitasking has started */
                 OS_Sched();
             }
         } else {
             OS_ENTER_CRITICAL();
-            OSTCBPrioTbl[prio] = (OS_TCB *)0;/* Make this priority available to others                 */
+            OSTCBPrioTbl[prio] = (OS_TCB *)0;/* return 코드가 비정상인경우 OSTCBPrioTbl[prio]를 0으로 설정해서 우선순위 예약을 해제  */
             OS_EXIT_CRITICAL();
         }
         return (err);
@@ -359,6 +365,7 @@ INT8U  OSTaskCreateExt (void   (*task)(void *pd),
 /*$PAGE*/
 #if OS_TASK_DEL_EN > 0
 INT8U  OSTaskDel (INT8U prio)
+	/*태스크를 삭제한다는 것은 태스크를 수면상태로 되돌리는 것.*/
 {
 #if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR     cpu_sr;
@@ -373,27 +380,28 @@ INT8U  OSTaskDel (INT8U prio)
     OS_TCB       *ptcb;
     BOOLEAN       self;
 
-    if (OSIntNesting > 0) {                                     /* See if trying to delete from ISR    */
+    if (OSIntNesting > 0) {         /* ISR에서 태스크를 삭제하려는 것인지 아닌지를 검사. ISR에서는 태스크를 삭제할 수 없음    */
         return (OS_TASK_DEL_ISR);
     }
 #if OS_ARG_CHK_EN > 0
-    if (prio == OS_IDLE_PRIO) {                                 /* Not allowed to delete idle task     */
+    if (prio == OS_IDLE_PRIO) {     /* Idle 태스크는 삭제할 수 없음.     */
         return (OS_TASK_DEL_IDLE);
     }
-    if (prio >= OS_LOWEST_PRIO && prio != OS_PRIO_SELF) {       /* Task priority valid ?               */
+    if (prio >= OS_LOWEST_PRIO && prio != OS_PRIO_SELF) {       /* 통계 태스크를 포함함 모든 상위 우선순위 태스크를 삭제할 수 있음.      */
         return (OS_PRIO_INVALID);
     }
 #endif
     OS_ENTER_CRITICAL();
-    if (prio == OS_PRIO_SELF) {                                 /* See if requesting to delete self    */
+    if (prio == OS_PRIO_SELF) {                                 /* 태스크 자기 자신도 삭제할 수 있음.    */
         prio = OSTCBCur->OSTCBPrio;                             /* Set priority to delete to current   */
     }
     ptcb = OSTCBPrioTbl[prio];
-    if (ptcb != (OS_TCB *)0) {                                       /* Task to delete must exist      */
-        if ((OSRdyTbl[ptcb->OSTCBY] &= ~ptcb->OSTCBBitX) == 0x00) {  /* Make task not ready            */
+    if (ptcb != (OS_TCB *)0) {                                       /* 삭제하고자 하는 우선순위에 해당하는 태스크가 존재하는지 검사.    */
+        if ((OSRdyTbl[ptcb->OSTCBY] &= ~ptcb->OSTCBBitX) == 0x00) {  /* 태스크가 준비 리스트에 있으면 준비 리스트로부터 태스크를 삭제        */
             OSRdyGrp &= ~ptcb->OSTCBBitY;
         }
-#if OS_EVENT_EN > 0
+
+#if OS_EVENT_EN > 0				/*태스크가 mutex, mailbox, message queue, semaphore 등을 기다리기 위해 대기 리스트에서 대기중이라면, 태스크를 해당 리스트에서 삭제*/
         pevent = ptcb->OSTCBEventPtr;
         if (pevent != (OS_EVENT *)0) {                          /* If task is waiting on event         */
             if ((pevent->OSEventTbl[ptcb->OSTCBY] &= ~ptcb->OSTCBBitX) == 0) { /* ... remove task from */
@@ -401,34 +409,37 @@ INT8U  OSTaskDel (INT8U prio)
             }
         }
 #endif
-#if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
+#if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)/*태스크가 이벤트 플래그 대기 리스트에 들어있다면 그 리스트로부터 태스크를 삭제*/
         pnode = ptcb->OSTCBFlagNode;
         if (pnode != (OS_FLAG_NODE *)0) {                       /* If task is waiting on event flag    */
             OS_FlagUnlink(pnode);                               /* Remove from wait list               */
         }
 #endif
-        ptcb->OSTCBDly  = 0;                                    /* Prevent OSTimeTick() from updating  */
-        ptcb->OSTCBStat = OS_STAT_RDY;                          /* Prevent task from being resumed     */
+        ptcb->OSTCBDly  = 0;                                    /* 인터럽트를 활성화한 뒤, 틱 인터럽트 핸들러가 태스크를 다시 준비 리스트로 삽입하는 것을 막기 위해 TCB내의 지연 카운트 값을 0으로 설정  */
+        ptcb->OSTCBStat = OS_STAT_RDY;                          /* 다른 태스크나 ISR이 OSTaskResume() 함수를 호출해서 이 태스크를 재실행하도록 하는 것을 막음.     */
 		if (OSLockNesting < 255) {
-            OSLockNesting++;
+            OSLockNesting++;									/* 현재 태스크는 실제 준비 리스트에서 삭제됨. 스케줄러가 다른 태스크로 문맥전환을 일으키지 않도록 스케줄러를 잠금.*/
 		}
-        OS_EXIT_CRITICAL();                                     /* Enabling INT. ignores next instruc. */
-        OS_Dummy();                                             /* ... Dummy ensures that INTs will be */
-        OS_ENTER_CRITICAL();                                    /* ... disabled HERE!                  */
+        OS_EXIT_CRITICAL();                                     /* ??이해안됨. Enabling INT. ignores next instruc. */
+        OS_Dummy();                                             /* 프로세서가 인터럽트를 활성화한 상태로 적어도 하나 이상의 명령어를 수행하도록 해주기 위함.
+         	 	 	 	 	 	 	 	 	 	 	 	 	 	*  대부분의 프로세서는 인터럽를 활성화 명령을 시행해도 하나 이상의 명령어가 실행되지 않으면 다음 명령이 실행할 떄까지는 여전히 인터럽트 비활성화 상태를 유지
+         	 	 	 	 	 	 	 	 	 	 	 	 	 	*  OS_Dummy() 함수를 호출하면서 프로세서가 최소한 한번의 Call, Return 명령을 실행하는 것을 보장.
+         	 	 	 	 	 	 	 	 	 	 	 	 	 	*/
+        OS_ENTER_CRITICAL();                                    /* 스케줄러 잠금 해제                  */
 		if (OSLockNesting > 0) {
             OSLockNesting--;
 		}
-        OSTaskDelHook(ptcb);                                    /* Call user defined hook              */
-        OSTaskCtr--;                                            /* One less task being managed         */
+        OSTaskDelHook(ptcb);                                    /* 사용자 정의 TCB에 대해 태스크 삭제를 위해 해주어야 할 일을 처리할 수 있음.              */
+        OSTaskCtr--;                                            /* 태스크가 하나 삭제된 것을 ucos-ii에 알림         */
         OSTCBPrioTbl[prio] = (OS_TCB *)0;                       /* Clear old priority entry            */
-        if (ptcb->OSTCBPrev == (OS_TCB *)0) {                   /* Remove from TCB chain               */
+        if (ptcb->OSTCBPrev == (OS_TCB *)0) {                   /* OSTCBList 변수가 유지하고 있는 태스크 블록 이중 연결 리스트로부터 태스크 컨트롤 블록을 제거               */
             ptcb->OSTCBNext->OSTCBPrev = (OS_TCB *)0;
             OSTCBList                  = ptcb->OSTCBNext;
         } else {
             ptcb->OSTCBPrev->OSTCBNext = ptcb->OSTCBNext;
             ptcb->OSTCBNext->OSTCBPrev = ptcb->OSTCBPrev;
         }
-        ptcb->OSTCBNext = OSTCBFreeList;                        /* Return TCB to free TCB list         */
+        ptcb->OSTCBNext = OSTCBFreeList;                        /* 삭제된 태스크 컨트롤 블록은 다시 태스크 생성을 위해 사용될 수 있도록 자유 태스크 컨트롤 블록 리스트에 삽입        */
         OSTCBFreeList   = ptcb;
         OS_EXIT_CRITICAL();
         OS_Sched();                                             /* Find new highest priority task      */

@@ -35,7 +35,7 @@
             .globl  	OS_CPU_IRQ_ISR
             .globl  	OS_CPU_FIQ_ISR
 
-            //.globl		OSTickISR
+            .globl		OSTickISR
 
 
 			.equ	NO_INT,           0xC0                         // Mask used to disable interrupts (Both FIR and IRQ)
@@ -415,7 +415,9 @@ OS_CPU_FIQ_ISR_1:
 
 OSTickISR:
 
-		//BL		=CONFIRM
+
+/*
+OSTickISR:
 											   // 프로세서 레지스터 저장
 		STR     R3,  [SP, #-4]!                // PUSH WORKING REGISTERS ONTO IRQ STACK
         STR     R2,  [SP, #-4]!
@@ -496,3 +498,4 @@ OSTickISR:
         LDR     R12, [SP], #4
         LDR     LR,  [SP], #4
         LDR     PC,  [SP], #4
+*/

@@ -12,9 +12,13 @@ OS_STK TestTaskStk2[100];
 
 void TestTask 	(void *pdata);
 void TestTask2 	(void *pdata);
+void timerCallBack (void);
 
 INT8U	prio1 = 0;
 INT8U	prio2 = 1;
+
+int channel = 0;
+bool play = true;
 
 volatile int frame = 0;
 
@@ -31,16 +35,19 @@ int main(void) {
 	//irqInit();	//인터럽트 벡터 설치
 
 	consoleDemoInit();
+	soundEnable();
+	//irqInit();		//libnds interrupt system 초기화
+
+	channel = soundPlayPSG(DutyCycle_50, 10000, 127, 64);
+
 	irqSet(IRQ_VBLANK, Vblank);
+
 	OSInit();
 	iprintf("\x1b[1;0H ----OSInit() init----\n");
 
-	OSTaskCreate(TestTask, (void*)0, &TestTaskStk1[99],prio1);
-	OSTaskCreate(TestTask2, (void*)0, &TestTaskStk2[99],prio2);
-
+	OSTaskCreate(TestTask, (void*)0, &TestTaskStk1[99],1);
+	OSTaskCreate(TestTask2, (void*)0, &TestTaskStk2[99],2);
 	//OSTaskCreate()함수를 거치면 TASK READY 상태가 되어 실행할 준비를 마친다.
-
-	//iprintf("\x1b[10;0H OSTaskCreate() init");
 	OSStart();
 	//현재 코드에서는 TestTask1의 상태는 TASK RUNNING
 	//TestTask2의 상태는 TASK WAITING 상태.
@@ -50,20 +57,18 @@ int main(void) {
 
 void TestTask (void *pdata){
 
-	INT8U temp;
+	//INT8U temp;
 	//pdata = pdata;
 
 	//printf("TestTask1 Init before while\n");
 
-	//timerStart(1, ClockDivider_1024, 20, (void *)OSTickISR);
+	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(5), timerCallBack);
+	//timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(5), (void *)OSTickISR);
+	printf("timerStart\n");
 
 	while(1){
 		printf("\nTestTask1 Init\n");
-		//OSTaskDel(OS_PRIO_SELF);
-		temp = prio1+2;
-		OSTaskChangePrio(prio1,temp);
-		//printf("prio1 : %d\n",prio1);
-		OSTimeDly(5);
+		OSTimeDly(10);
 		//OSTimeDly() : 원하는 시간동안 자신의 실행을 지연할 수 있음.
 		//설정한 시간이 만료되면 OSTimeTick() 함수에 의해 준비상태가 된다.
 	}
@@ -74,15 +79,22 @@ void TestTask2 (void *pdata){
 
 	//printf("TestTask2 Init before while\n");
 
-	INT8U temp = 0;
+	//INT8U temp = 0;
 
 	while(1){
 		printf("\nTestTask2 Init\n");
-		//temp = prio2+2;
-		//OSTaskChangePrio(prio2,temp);
-		//printf("prio2 : %d\n",prio2);
-		OSTimeDly(5);
+		OSTimeDly(10);
 	}
+}
+
+void timerCallBack(){
+	if(play){
+		soundPause(channel);
+	}else{
+		soundPause(channel);
+	}
+
+	play = !play;
 }
 
 

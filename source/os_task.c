@@ -61,7 +61,6 @@ INT8U  OSTaskChangePrio (INT8U oldprio, INT8U newprio)
     INT8U        bity;
 
 
-
 #if OS_ARG_CHK_EN > 0
     if ((oldprio >= OS_LOWEST_PRIO && oldprio != OS_PRIO_SELF)  || /* Idle Task의 우선순위를 변경할 수 없음.*/
          newprio >= OS_LOWEST_PRIO) {

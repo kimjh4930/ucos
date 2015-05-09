@@ -1153,6 +1153,6 @@ void          OSTickISR(void);
 
 //¼öÁ¤
 //void	OSTickISR(void);
-void	CONFIRM(void);
+//void	CONFIRM(void);
 //void	TIMER_IR_CLEAR(void);
 //void	TIMER_IR_ENABLE(void);

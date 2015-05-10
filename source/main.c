@@ -10,9 +10,9 @@
 OS_STK TestTaskStk1[100];
 OS_STK TestTaskStk2[100];
 
-void TestTask 	(void *pdata);
-void TestTask2 	(void *pdata);
-void timerCallBack (void);
+void TestTask 		(void *pdata);
+void TestTask2 		(void *pdata);
+void timerCallBack 	(void);
 
 INT8U	prio1 = 0;
 INT8U	prio2 = 1;
@@ -32,18 +32,17 @@ void Vblank() {
 int main(void) {
 //---------------------------------------------------------------------------------
 
-	//irqInit();	//인터럽트 벡터 설치
-
 	consoleDemoInit();
 	soundEnable();
-	//irqInit();		//libnds interrupt system 초기화
 
 	channel = soundPlayPSG(DutyCycle_50, 10000, 127, 64);
 
-	irqSet(IRQ_VBLANK, Vblank);
+	//irqSet(IRQ_VBLANK, Vblank);
 
 	OSInit();
 	iprintf("\x1b[1;0H ----OSInit() init----\n");
+
+	irqInit();		//libnds interrupt system 초기화
 
 	OSTaskCreate(TestTask, (void*)0, &TestTaskStk1[99],1);
 	OSTaskCreate(TestTask2, (void*)0, &TestTaskStk2[99],2);
@@ -57,14 +56,12 @@ int main(void) {
 
 void TestTask (void *pdata){
 
-	//INT8U temp;
-	//pdata = pdata;
-
 	//printf("TestTask1 Init before while\n");
 
 	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(5), timerCallBack);
+	//timerCallBack 함수를 초당 5번 부른다.
 	//timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(5), (void *)OSTickISR);
-	printf("timerStart\n");
+	//printf("timerStart\n");
 
 	while(1){
 		printf("\nTestTask1 Init\n");
@@ -88,10 +85,13 @@ void TestTask2 (void *pdata){
 }
 
 void timerCallBack(){
+
 	if(play){
 		soundPause(channel);
+		printf("play stop\n");
 	}else{
-		soundPause(channel);
+		soundResume(channel);
+		printf("play start\n");
 	}
 
 	play = !play;

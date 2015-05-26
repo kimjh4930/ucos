@@ -300,7 +300,7 @@ void  OSStart (void)
 {
     INT8U y;
     INT8U x;
-    printf("init OSStart()\n");
+    //printf("init OSStart()\n");
 
 
 
@@ -311,7 +311,7 @@ void  OSStart (void)
         OSPrioCur     = OSPrioHighRdy;
         OSTCBHighRdy  = OSTCBPrioTbl[OSPrioHighRdy]; /* Point to highest priority task ready to run    */
         OSTCBCur      = OSTCBHighRdy;
-        printf("OSTCBHighRdy : %d\n",OSTCBCur);
+        //printf("OSTCBHighRdy : %d\n",OSTCBCur);
         OSStartHighRdy();                            /* Execute target specific code to start task     */
         //OSStartHighRdy()
         //실행할 태스크의 스택으로부터 레지스터들을 복구하고 인터럽트 복귀 명령을 수행하여 태스크의 코드를 실행한다.
@@ -894,9 +894,9 @@ void  OS_Sched (void)
         if (OSPrioHighRdy != OSPrioCur) {              /* No Ctx Sw if current task is highest rdy     */
             OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
             OSCtxSwCtr++;                              /* Increment context switch counter             */
-            printf("before OS_TASK_SW()\n");
+            //printf("before OS_TASK_SW()\n");
             OS_TASK_SW();                              /* Perform a context switch                     */
-            printf("after OS_TASK_SW()\n");
+            //printf("after OS_TASK_SW()\n");
         }
     }
     OS_EXIT_CRITICAL();
@@ -929,7 +929,7 @@ void  OS_TaskIdle (void *pdata)
     OS_CPU_SR  cpu_sr;
 #endif
     
-    printf("OS_TaskIdle Init\n");
+    //printf("OS_TaskIdle Init\n");
     //printf("confirm = %d\n",confirm);
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
     for (;;) {

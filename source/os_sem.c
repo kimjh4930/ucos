@@ -16,10 +16,10 @@
 #include "includes.h"
 #endif
 
-//#ifndef UCOS_II
-//#define UCOS_II
-//#include "ucos_ii.h"
-//#endif
+#ifndef UCOS_II
+#define UCOS_II
+#include "ucos_ii.h"
+#endif
 
 #if OS_SEM_EN > 0
 /*

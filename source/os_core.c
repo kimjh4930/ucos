@@ -492,7 +492,7 @@ INT8U  OS_EventTaskRdy (OS_EVENT *pevent, void *msg, INT8U msk)
 #if ((OS_Q_EN > 0) && (OS_MAX_QS > 0)) || (OS_MBOX_EN > 0)
     ptcb->OSTCBMsg       = msg;                       /* Send message directly to waiting task         */
 #else
-    msg                  = msg;                       /* Prevent compiler warning if not used          */
+    //msg                  = msg;                       /* Prevent compiler warning if not used          */
 #endif
     ptcb->OSTCBStat     &= ~msk;                      /* Clear bit associated with event type          */
     if (ptcb->OSTCBStat == OS_STAT_RDY) {             /* See if task is ready (could be susp'd)        */
@@ -936,6 +936,7 @@ void  OS_TaskIdle (void *pdata)
         OS_ENTER_CRITICAL();
         OSIdleCtr++;
         OS_EXIT_CRITICAL();
+        //printf("OSIdleCtr : %d\n",OSIdleCtr);
         OSTaskIdleHook();                        /* Call user definable HOOK                           */
     }
 }
@@ -966,6 +967,9 @@ void  OS_TaskIdle (void *pdata)
 *********************************************************************************************************
 */
 
+/*
+ * OS_TaskStat()은 CPU사용율을 1초마다 %로 계산
+ */
 #if OS_TASK_STAT_EN > 0
 void  OS_TaskStat (void *pdata)
 {

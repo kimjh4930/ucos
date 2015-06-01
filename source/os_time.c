@@ -52,6 +52,7 @@ void  OSTimeDly (INT16U ticks)
         OSTCBCur->OSTCBDly = ticks;                                       /* Load ticks in TCB         */
         OS_EXIT_CRITICAL();
         //printf("OSTimeDly Before OS_Sched\n");
+        //OSTimeTick();
         OS_Sched();                                                       /* Find next task to run!    */
     }
 }

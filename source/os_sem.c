@@ -250,11 +250,10 @@ void  OSSemPend (OS_EVENT *pevent, INT16U timeout, INT8U *err)
 {
 #if OS_CRITICAL_METHOD == 3                           /* Allocate storage for CPU status register      */
     OS_CPU_SR  cpu_sr;
-#endif    
-
+#endif
 
     if (OSIntNesting > 0) {                           /* See if called from ISR ...                    */
-        *err = OS_ERR_PEND_ISR;                       /* ... can't PEND from an ISR                    */
+    	*err = OS_ERR_PEND_ISR;                       /* ... can't PEND from an ISR                    */
         return;
     }
 #if OS_ARG_CHK_EN > 0

@@ -347,13 +347,13 @@ void  OSStatInit (void)
 #endif    
     
     
-    OSTimeDly(2);                                /* Synchronize with clock tick                        */
+    //OSTimeDly(2);                                /* Synchronize with clock tick                        */
     OS_ENTER_CRITICAL();
     OSIdleCtr    = 0L;                           /* Clear idle counter                                 */
     OS_EXIT_CRITICAL();
-    OSTimeDly(OS_TICKS_PER_SEC);                 /* Determine MAX. idle counter value for 1 second     */
+    //OSTimeDly(OS_TICKS_PER_SEC);                 /* Determine MAX. idle counter value for 1 second     */
     OS_ENTER_CRITICAL();
-    OSIdleCtrMax = OSIdleCtr;                    /* Store maximum idle counter count in 1 second       */
+    OSIdleCtrMax = 3000000;//OSIdleCtr;                    /* Store maximum idle counter count in 1 second       */
     OSStatRdy    = TRUE;
     OS_EXIT_CRITICAL();
 }
@@ -812,6 +812,7 @@ static  void  OS_InitTaskStat (void)
     #endif
 #else
     #if OS_STK_GROWTH == 1
+    printf("OS_TaskStat create\n");
     (void)OSTaskCreate(OS_TaskStat,
                        (void *)0,                                      /* No args passed to OS_TaskStat()*/
                        &OSTaskStatStk[OS_TASK_STAT_STK_SIZE - 1],      /* Set Top-Of-Stack               */
@@ -980,9 +981,10 @@ void  OS_TaskStat (void *pdata)
     INT32U     max;
     INT8S      usage;
 
-
+    //printf("OS_TaskStat init\n");
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
     while (OSStatRdy == FALSE) {
+    	printf("OSStatRdy is FALSE\n");
         OSTimeDly(2 * OS_TICKS_PER_SEC);         /* Wait until statistic task is ready                 */
     }
     max = OSIdleCtrMax / 100L;
@@ -990,10 +992,12 @@ void  OS_TaskStat (void *pdata)
         OS_ENTER_CRITICAL();
         OSIdleCtrRun = OSIdleCtr;                /* Obtain the of the idle counter for the past second */
         run          = OSIdleCtr;
+        //printf("run : %d\n",run);
         OSIdleCtr    = 0L;                       /* Reset the idle counter for the next second         */
         OS_EXIT_CRITICAL();
         if (max > 0L) {
             usage = (INT8S)(100L - run / max);
+            printf("usage : %d, run : %d\n",usage,run);
             if (usage >= 0) {                    /* Make sure we don't have a negative percentage      */
                 OSCPUUsage = usage;
             } else {

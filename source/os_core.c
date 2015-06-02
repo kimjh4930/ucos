@@ -22,6 +22,11 @@
 #include "ucos_ii.h"
 #endif
 
+#ifndef NDS
+#define NDS
+#include <nds.h>
+#endif
+
 /*
 *********************************************************************************************************
 *                              MAPPING TABLE TO MAP BIT POSITION TO BIT MASK
@@ -347,13 +352,13 @@ void  OSStatInit (void)
 #endif    
     
     
-    //OSTimeDly(2);                                /* Synchronize with clock tick                        */
+    OSTimeDly(2);                                /* Synchronize with clock tick                        */
     OS_ENTER_CRITICAL();
     OSIdleCtr    = 0L;                           /* Clear idle counter                                 */
     OS_EXIT_CRITICAL();
-    //OSTimeDly(OS_TICKS_PER_SEC);                 /* Determine MAX. idle counter value for 1 second     */
+    OSTimeDly(OS_TICKS_PER_SEC);                 /* Determine MAX. idle counter value for 1 second     */
     OS_ENTER_CRITICAL();
-    OSIdleCtrMax = 3000000;//OSIdleCtr;                    /* Store maximum idle counter count in 1 second       */
+    OSIdleCtrMax = OSIdleCtr;                    /* Store maximum idle counter count in 1 second       */
     OSStatRdy    = TRUE;
     OS_EXIT_CRITICAL();
 }
@@ -381,11 +386,12 @@ void  OSTimeTick (void)
     OS_TCB    *ptcb;
 
 
-    //OSTimeTickHook();                                      /* Call user definable hook                 */
+    //OSTimeTickHook();                                    /* Call user definable hook                 */
 #if OS_TIME_GET_SET_EN > 0   
     OS_ENTER_CRITICAL();                                   /* Update the 32-bit tick counter           */
-    OSTime++;
+    OSTime++;											   /* 틱 발생횟수를 저장? 현재 시스템 시간 값?			   */
     OS_EXIT_CRITICAL();
+    //printf("OSTime = %d\n",OSTime);
 #endif
     if (OSRunning == TRUE) {    
         ptcb = OSTCBList;                                  /* Point at first TCB in TCB list           */
@@ -930,14 +936,11 @@ void  OS_TaskIdle (void *pdata)
     OS_CPU_SR  cpu_sr;
 #endif
     
-    //printf("OS_TaskIdle Init\n");
-    //printf("confirm = %d\n",confirm);
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
     for (;;) {
         OS_ENTER_CRITICAL();
         OSIdleCtr++;
         OS_EXIT_CRITICAL();
-        //printf("OSIdleCtr : %d\n",OSIdleCtr);
         OSTaskIdleHook();                        /* Call user definable HOOK                           */
     }
 }
@@ -984,7 +987,7 @@ void  OS_TaskStat (void *pdata)
     //printf("OS_TaskStat init\n");
     //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
     while (OSStatRdy == FALSE) {
-    	printf("OSStatRdy is FALSE\n");
+    	//printf("OSStatRdy is FALSE\n");
         OSTimeDly(2 * OS_TICKS_PER_SEC);         /* Wait until statistic task is ready                 */
     }
     max = OSIdleCtrMax / 100L;

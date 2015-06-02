@@ -21,6 +21,19 @@
 #include "ucos_ii.h"
 #endif
 
+#ifndef NDS
+#define NDS
+#include <nds.h>
+#endif
+
+#define TIMER_SPEED (BUS_CLOCK/1024)	/*#define BUS_CLOCK   (33513982)*/
+
+typedef enum{
+	timerState_Stop, timerState_Pause, timerState_Running
+}TimerStates;
+
+TimerStates state = timerState_Stop;
+
 /*
 *********************************************************************************************************
 *                                DELAY TASK 'n' TICKS   (n from 0 to 65535)
@@ -37,22 +50,25 @@
 *********************************************************************************************************
 */
 
-void  OSTimeDly (INT16U ticks)
+void  OSTimeDly (INT16U ticks)	//tick을 second로 봐야하나
 {
+	INT16U tick=0;
 #if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr;
 #endif
+    //nds.h 의 tick으로 전환
 
-    //printf("ticks : %d\n", ticks);
+    tick = (ticks * TIMER_SPEED)/30000;
+
+    //printf("tick : %d\n",tick);
     if (ticks > 0) {                                                      /* 0 means no delay!         */
         OS_ENTER_CRITICAL();
         if ((OSRdyTbl[OSTCBCur->OSTCBY] &= ~OSTCBCur->OSTCBBitX) == 0) {  /* Delay current task        */
             OSRdyGrp &= ~OSTCBCur->OSTCBBitY;
         }
-        OSTCBCur->OSTCBDly = ticks;                                       /* Load ticks in TCB         */
+        //OSTCBCur->OSTCBDly = ticks;                                       /* Load ticks in TCB         */
+        OSTCBCur->OSTCBDly = tick;
         OS_EXIT_CRITICAL();
-        //printf("OSTimeDly Before OS_Sched\n");
-        //OSTimeTick();
         OS_Sched();                                                       /* Find next task to run!    */
     }
 }

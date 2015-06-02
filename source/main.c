@@ -71,24 +71,17 @@ void TaskStart(void *pdata){
 	/* 통계 Task 초기화
 	 * IDLE 태스크 외에 아무 태스크도 실행되지 않은 상태에서 IDLE 카운터 값을 얼마나 증가할 수 있는지를 알아냄.
 	 */
-	printf("1\n");
-	irqInit();
-	printf("2\n");
-	OSStatInit();
 
-	printf("3\n");
+	irqInit();
+	//OSStatInit();
 	timerStart(0, ClockDivider_1024, TIMER_FREQ_64(2), timerCallBack);
-	printf("4\n");
 
 	TaskStartCreateTasks();
-	printf("5\n");
 
 	while(1){
-		printf("6\n");
 		OSCtxSwCtr = 0;
 		OSTimeDly(1);
 		taskPrint();
-		printf("7\n");
 		//OSTimeDlyHMSM(0,0,1,0);
 	}
 
@@ -122,6 +115,7 @@ void Task1(void *pdata){
 		//화면출력
 		//iprintf("\x1b[2;0H task1 x : %d\n",x);
 		OSTimeDly(1);
+		printf("task1 execute\n");
 	}
 }
 
@@ -137,6 +131,7 @@ void Task2(void *pdata){
 		//화면출력
 		//iprintf("\x1b[3;0H task2 x : %d\n",x);
 		OSTimeDly(1);
+		printf("task2 execute\n");
 	}
 }
 
@@ -152,6 +147,7 @@ void Task3(void *pdata){
 		//화면출력
 		//iprintf("\x1b[4;0H task3 x : %d\n",x);
 		OSTimeDly(1);
+		printf("task3 execute\n");
 	}
 }
 
@@ -167,6 +163,7 @@ void Task4(void *pdata){
 		//화면출력
 		//iprintf("\x1b[5;0H task4 x : %d\n",x);
 		OSTimeDly(1);
+		printf("task4 execute\n");
 	}
 }
 
@@ -182,6 +179,7 @@ void Task5(void *pdata){
 		//화면출력
 		//iprintf("\x1b[6;0H task5 x : %d\n",x);
 		OSTimeDly(1);
+		printf("task5 execute\n");
 	}
 }
 
@@ -191,13 +189,18 @@ void taskPrint(void){
 //	for(index=0; index<5; index++){
 //		printf("value[%d] = %d\n",index,value[index]);
 //	}
-	printf("value[0] = %d\n"
+	/*printf("value[0] = %d\n"
 			"value[1] = %d\n"
 			"value[2] = %d\n"
 			"value[3] = %d\n"
 			"value[4] = %d\n"
-			"OSCPUUsage = %d\n",value[0],value[1],value[2],value[3],value[4],OSCPUUsage);
-	//printf("OSCPUUsage = %d\n",OSCPUUsage);
+			"OSCPUUsage = %d\n",value[0],value[1],value[2],value[3],value[4],OSCPUUsage);*/
+
+//	printf("value[0] = %d\n"
+//			"value[1] = %d\n"
+//			"value[2] = %d\n"
+//			"value[3] = %d\n"
+//			"value[4] = %d\n",value[0],value[1],value[2],value[3],value[4]);
 }
 
 

@@ -115,8 +115,8 @@ void  OSTaskDelHook (OS_TCB *ptcb)
 void  OSTaskIdleHook (void)
 {
 	//printf("OSTaskIdleHook Init\n");
-	printf("OSTaskIdleHook OSIdleCtr : %d\n",OSIdleCtr);
-	OSTimeTick();
+	//printf("OSTaskIdleHook OSIdleCtr : %d\n",OSIdleCtr);
+	//OSTimeTick();
 	//OS_Sched();
 
 }

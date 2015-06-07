@@ -26,13 +26,15 @@
 #include <nds.h>
 #endif
 
-#define TIMER_SPEED (BUS_CLOCK/1024)	/*#define BUS_CLOCK   (33513982)*/
+/*#include <time.h>
+
+#define TIMER_SPEED (BUS_CLOCK/1024)	#define BUS_CLOCK   (33513982)
 
 typedef enum{
 	timerState_Stop, timerState_Pause, timerState_Running
 }TimerStates;
 
-TimerStates state = timerState_Stop;
+TimerStates state = timerState_Stop;*/
 
 /*
 *********************************************************************************************************
@@ -52,22 +54,16 @@ TimerStates state = timerState_Stop;
 
 void  OSTimeDly (INT16U ticks)	//tick을 second로 봐야하나
 {
-	INT16U tick=0;
 #if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr;
 #endif
-    //nds.h 의 tick으로 전환
-
-    tick = (ticks * TIMER_SPEED)/30000;
-
-    //printf("tick : %d\n",tick);
     if (ticks > 0) {                                                      /* 0 means no delay!         */
         OS_ENTER_CRITICAL();
         if ((OSRdyTbl[OSTCBCur->OSTCBY] &= ~OSTCBCur->OSTCBBitX) == 0) {  /* Delay current task        */
             OSRdyGrp &= ~OSTCBCur->OSTCBBitY;
         }
-        //OSTCBCur->OSTCBDly = ticks;                                       /* Load ticks in TCB         */
-        OSTCBCur->OSTCBDly = tick;
+        OSTCBCur->OSTCBDly = ticks;                                       /* Load ticks in TCB         */
+        //OSTCBCur->OSTCBDly = tick;
         OS_EXIT_CRITICAL();
         OS_Sched();                                                       /* Find next task to run!    */
     }
@@ -108,6 +104,7 @@ INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U milli)
 {
     INT32U ticks;
     INT16U loops;
+    INT32U second, millis;
 
 
     if (hours > 0 || minutes > 0 || seconds > 0 || milli > 0) {
@@ -125,14 +122,23 @@ INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U milli)
         //uCOS-II 에서는 65,535틱까지의 지연만 지원
         ticks = ((INT32U)hours * 3600L + (INT32U)minutes * 60L + (INT32U)seconds) * OS_TICKS_PER_SEC
               + OS_TICKS_PER_SEC * ((INT32U)milli + 500L / OS_TICKS_PER_SEC) / 1000L;
+        /*
+         * 밀리초 단위로 지정된 시간을 틱 단위로 변환하며, 반옹림으로 근사치를 얻는다.
+         * 500/OS_TICKS_PER)SEC값은 기본적으로 0.5틱에 해당라는 밀리초 단위의 값.
+         */
+
         loops = (INT16U)(ticks / 65536L);        /* Compute the integral number of 65536 tick delays   */
         ticks = ticks % 65536L;                  /* Obtain  the fractional number of ticks             */
+        /*
+         *  ucos-ii 에서는 65536 틱 까지빢에 지원하지 않으므로 나누어 몫과 나머지를 구한다.
+         */
         OSTimeDly((INT16U)ticks);
         while (loops > 0) {
             OSTimeDly(32768);
             OSTimeDly(32768);
             loops--;
         }
+        //해당 시간만큼 지연을 발생시킴.
         return (OS_NO_ERR);
     }
     return (OS_TIME_ZERO_DLY);

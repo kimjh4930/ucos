@@ -984,10 +984,8 @@ void  OS_TaskStat (void *pdata)
     INT32U     max;
     INT8S      usage;
 
-    //printf("OS_TaskStat init\n");
-    //pdata = pdata;                               /* Prevent compiler warning for not using 'pdata'     */
+    //pdata = pdata;                             /* Prevent compiler warning for not using 'pdata'     */
     while (OSStatRdy == FALSE) {
-    	//printf("OSStatRdy is FALSE\n");
         OSTimeDly(2 * OS_TICKS_PER_SEC);         /* Wait until statistic task is ready                 */
     }
     max = OSIdleCtrMax / 100L;
@@ -995,7 +993,6 @@ void  OS_TaskStat (void *pdata)
         OS_ENTER_CRITICAL();
         OSIdleCtrRun = OSIdleCtr;                /* Obtain the of the idle counter for the past second */
         run          = OSIdleCtr;
-        //printf("run : %d\n",run);
         OSIdleCtr    = 0L;                       /* Reset the idle counter for the next second         */
         OS_EXIT_CRITICAL();
         if (max > 0L) {

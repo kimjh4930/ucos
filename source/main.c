@@ -21,11 +21,17 @@ OS_STK TaskStk[N_TASKS][TASK_STK_SIZE];
 OS_STK TaskStartStk[TASK_STK_SIZE];
 char TaskData[N_TASKS];
 OS_EVENT *RandomSem;
+
 int value[3];
-int tickArray[N_TASKS]={0,};
+int tickArray[N_TASKS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 int clockticks = 0;
 int totalticks = 0;
-int opTimes[8] = {100,500,1000,5000,10000,50000,100000,500000};
+int period = 0;
+//int opTimes[8] = {10000,30000,50000,80000,100000,300000,500000,1000000};
+//int opTimes[8] = { 5000, 15000, 25000, 40000, 50000, 150000, 250000, 500000 };
+//int opTimes[8] = { 1000, 3000, 5000, 8000, 10000, 30000, 50000, 100000 };
+int opTimes[8] = { 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000 };
+//int opTimes[8] = { 10000, 80000, 10000, 80000, 10000, 80000, 10000, 80000 };
 
 void Task1(void *pdata);
 void Task2(void *pdata);
@@ -35,7 +41,6 @@ void timerCallBack(void);
 void taskPrint(void);
 static void TaskStartCreateTasks(void);
 int getTicks(void);
-void cleartickArray();
 
 int timerCall = 0;
 
@@ -73,12 +78,13 @@ void TaskStart(void *pdata) {
 	 * IDLE 태스크 외에 아무 태스크도 실행되지 않은 상태에서 IDLE 카운터 값을 얼마나 증가할 수 있는지를 알아냄.
 	 */
 
-	int endtick=0;
-
 	//irqInit();
 	//OSStatInit();
-	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(1), timerCallBack);
+	period = 5;
+
+	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(period), timerCallBack);
 	timerStart(1, ClockDivider_1024, 0, NULL);
+
 	TaskStartCreateTasks();
 
 	while (1) {
@@ -86,6 +92,7 @@ void TaskStart(void *pdata) {
 		clockticks += timerElapsed(1);
 		OSCtxSwCtr = 0;
 		OSTimeDly(1);
+		tickArray[3] = clockticks;
 		taskPrint();
 
 	}
@@ -110,18 +117,18 @@ void Task1(void *pdata) {
 
 	while (1) {
 		clockticks = 0;
+		tick1 = 0;
+		tick2 = 0;
 		tick1 = getTicks();
 
 		times = rand() % 8;
-		//iprintf("opTimes[%d] = %d\n",times, opTimes[times]);
+
 		for (i = 0; i < opTimes[times]; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
 		}
 		tick2 = getTicks();
-		//iprintf("tick in task1 \n%d, %d, %d\n", tick1, tick2, tick2 - tick1);
-		//iprintf("task1 ticks : %u\n",ticks);
 		tickArray[0] = tick2 - tick1;
 
 		OSTimeDly(1);
@@ -139,7 +146,9 @@ void Task2(void *pdata) {
 	//printf("task create\n");
 
 	while (1) {
-		clockticks = 0;
+		//clockticks = 0;
+		tick3 = 0;
+		tick4 = 0;
 		tick3 = getTicks();
 
 		times = rand() % 8;
@@ -151,8 +160,6 @@ void Task2(void *pdata) {
 			clockticks += timerElapsed(1);
 		}
 		tick4 = getTicks();
-		//printf("tick in task2 \n%d, %d, %d\n", tick3, tick4, tick4 - tick3);
-		//printf("task3 ticks : %u\n",getTicks());
 		tickArray[1] = tick4 - tick3;
 		OSTimeDly(1);
 
@@ -167,13 +174,12 @@ void Task3(void *pdata) {
 	int times = 0;
 	INT32U a = 1, b = 2;
 
-	//printf("task create\n");
-
 	while (1) {
-		clockticks = 0;
+		//clockticks = 0;
+		tick5 = 0;
+		tick6 = 0;
 		tick5 = getTicks();
 
-		//printf("task3\n");
 		times = rand() % 8;
 
 		for (i = 0; i < opTimes[times]; i++) {
@@ -184,33 +190,29 @@ void Task3(void *pdata) {
 
 		tick6 = getTicks();
 
-		//iprintf("tick in task3 \n%d, %d, %d\n", tick5, tick6, tick6 - tick5);
-		//printf("task1 ticks : %u\n",ticks);
 		tickArray[2] = tick6 - tick5;
 		OSTimeDly(1);
 	}
 }
 
 void taskPrint(void) {
-	iprintf("task1 : %d\ntask2 : %d\ntask3 : %d\n", tickArray[0], tickArray[1], tickArray[2]);
-	//OSCPUUsage
+	iprintf(
+			"\x1b[3;0Htask1 : %8d \tus\ntask2 : %8d \tus\ntask3 : %8d \tus\nutilization : %3d\t%%",
+			//(tickArray[0]*10000/32728),
+			//(tickArray[1]*10000/32728),
+			//(tickArray[2]*10000/32728));
+			((tickArray[0] % TIMER_SPEED) * 1000000) / TIMER_SPEED,
+			((tickArray[1] % TIMER_SPEED) * 1000000) / TIMER_SPEED,
+			((tickArray[2] % TIMER_SPEED) * 1000000) / TIMER_SPEED,
+			(clockticks * 100) / (32728 / period)
+			);
 }
 
 void timerCallBack() {
-	//taskPrint();
-	//cleartickArray();
 	OSTimeTick();
 	OS_Sched();
 }
 
 int getTicks() {
 	return clockticks;
-}
-
-void cleartickArray(){
-	int i=0;
-
-	for(i=0; i<N_TASKS; i++){
-		tickArray[i]=0;
-	}
 }

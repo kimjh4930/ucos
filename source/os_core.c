@@ -818,7 +818,7 @@ static  void  OS_InitTaskStat (void)
     #endif
 #else
     #if OS_STK_GROWTH == 1
-    printf("OS_TaskStat create\n");
+    //printf("OS_TaskStat create\n");
     (void)OSTaskCreate(OS_TaskStat,
                        (void *)0,                                      /* No args passed to OS_TaskStat()*/
                        &OSTaskStatStk[OS_TASK_STAT_STK_SIZE - 1],      /* Set Top-Of-Stack               */

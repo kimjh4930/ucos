@@ -27,11 +27,12 @@ int tickArray[N_TASKS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 int clockticks = 0;
 int totalticks = 0;
 int period = 0;
-//int opTimes[8] = {10000,30000,50000,80000,100000,300000,500000,1000000};
-//int opTimes[8] = { 5000, 15000, 25000, 40000, 50000, 150000, 250000, 500000 };
-//int opTimes[8] = { 1000, 3000, 5000, 8000, 10000, 30000, 50000, 100000 };
-int opTimes[8] = { 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000 };
-//int opTimes[8] = { 10000, 80000, 10000, 80000, 10000, 80000, 10000, 80000 };
+int number[4] = {0,0,0,0};
+
+int number1 = 0;
+int number2 = 0;
+int number3 = 0;
+int number4 = 0;
 
 void Task1(void *pdata);
 void Task2(void *pdata);
@@ -41,8 +42,6 @@ void timerCallBack(void);
 void taskPrint(void);
 static void TaskStartCreateTasks(void);
 int getTicks(void);
-
-int timerCall = 0;
 
 //---------------------------------------------------------------------------------
 int main(void) {
@@ -92,7 +91,7 @@ void TaskStart(void *pdata) {
 		clockticks += timerElapsed(1);
 		OSCtxSwCtr = 0;
 		OSTimeDly(1);
-		tickArray[3] = clockticks;
+		//tickArray[3] = clockticks;
 		taskPrint();
 
 	}
@@ -108,28 +107,22 @@ void TaskStartCreateTasks(void) {
 }
 
 void Task1(void *pdata) {
-	int tick1 = 0;
-	int tick2 = 0;
-	int times = 0;
+
 	INT32U a = 1, b = 2;
 	INT32U i = 0;
-	INT32U j = 0;
 
 	while (1) {
-		clockticks = 0;
-		tick1 = 0;
-		tick2 = 0;
-		tick1 = getTicks();
+		tickArray[0] = getTicks();
 
-		times = rand() % 8;
-
-		for (i = 0; i < opTimes[times]; i++) {
+		for (i = 0; i < 100; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
 		}
-		tick2 = getTicks();
-		tickArray[0] = tick2 - tick1;
+		tickArray[1] = getTicks();
+		tickArray[2] = tickArray[1] - tickArray[0];
+
+		number1++;
 
 		OSTimeDly(1);
 
@@ -137,66 +130,51 @@ void Task1(void *pdata) {
 }
 
 void Task2(void *pdata) {
-	int tick3 = 0;
-	int tick4 = 0;
-	int times = 0;
+
 	INT32U a = 1, b = 2;
 	INT32U i = 0;
 
-	//printf("task create\n");
-
 	while (1) {
-		//clockticks = 0;
-		tick3 = 0;
-		tick4 = 0;
-		tick3 = getTicks();
 
-		times = rand() % 8;
-		//printf("task2\n");
+		tickArray[3] = getTicks();
 
-		for (i = 0; i < opTimes[times]; i++) {
+		for (i = 0; i < 100; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
 		}
-		tick4 = getTicks();
-		tickArray[1] = tick4 - tick3;
+		tickArray[4] = getTicks();
+		tickArray[5] = tickArray[4] - tickArray[3];
+
+		number2++;
+
 		OSTimeDly(1);
 
 	}
 }
 
 void Task3(void *pdata) {
-	INT8U err;
-	INT32U i = 0;
-	int tick5 = 0;
-	int tick6 = 0;
-	int times = 0;
 	INT32U a = 1, b = 2;
+	INT32U i = 0;
 
 	while (1) {
-		//clockticks = 0;
-		tick5 = 0;
-		tick6 = 0;
-		tick5 = getTicks();
-
-		times = rand() % 8;
-
-		for (i = 0; i < opTimes[times]; i++) {
+		tickArray[6] = getTicks();
+		for (i = 0; i < 5000000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
 		}
+		tickArray[7] = getTicks();
+		tickArray[8] = tickArray[7] - tickArray[6];
 
-		tick6 = getTicks();
-
-		tickArray[2] = tick6 - tick5;
+		number3++;
 		OSTimeDly(1);
 	}
 }
 
 void taskPrint(void) {
-	iprintf(
+	//period : 32728/period * 1000 ms
+	/*iprintf(
 			"\x1b[3;0Htask1 : %8d \tus\ntask2 : %8d \tus\ntask3 : %8d \tus\nutilization : %3d\t%%",
 			//(tickArray[0]*10000/32728),
 			//(tickArray[1]*10000/32728),
@@ -205,10 +183,28 @@ void taskPrint(void) {
 			((tickArray[1] % TIMER_SPEED) * 1000000) / TIMER_SPEED,
 			((tickArray[2] % TIMER_SPEED) * 1000000) / TIMER_SPEED,
 			(clockticks * 100) / (32728 / period)
-			);
+			);*/
+	/*iprintf("\x1b[3;0Htask1 init : %8d\tms\ntask1 exit : %8d\tms\ntask1 util : %8d\t%%\n"
+			"task2 init : %8d\tms\ntask2 exit : %8d\tms\ntask2 util : %8d\t%%\n"
+			"task3 init : %8d\tms\ntask3 exit : %8d\tms\ntask3 util : %8d\t%%\n"
+			"time : %8d\ttimes",
+			tickArray[0], tickArray[1], ((tickArray[2]*100)/(32728/period)),
+			tickArray[3], tickArray[4], ((tickArray[5]*100)/(32728/period)),
+			tickArray[6], tickArray[7], ((tickArray[8]*100)/(32728/period)),
+			number);*/
+	iprintf("\x1b[3;0H1 init : %5d exit : %5d\ntime : %d\n"
+			"2 init : %5d exit : %5d\ntime : %d\n"
+			"3 init : %5d exit : %5d\ntime : %d\n"
+			"total time : %d",
+			tickArray[0], tickArray[1], number1,
+			tickArray[3], tickArray[4], number2,
+			tickArray[6], tickArray[7], number3,
+			number4);
+
 }
 
 void timerCallBack() {
+	number4++;
 	OSTimeTick();
 	OS_Sched();
 }

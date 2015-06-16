@@ -92,17 +92,14 @@ void TaskStart(void *pdata) {
 	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(period), timerCallBack);
 	timerStart(1, ClockDivider_1024, 0, NULL);
 
-	AckMbox = OSMboxCreate((void *)0);
-	TxMbox = OSMboxCreate((void *)0);
-
 	TaskStartCreateTasks();
 
 	while (1) {
 		clockticks = 0;
 		clockticks += timerElapsed(1);
-		//OSCtxSwCtr = 0;
+		tickArray[8] = clockticks;
 		OSTimeDly(1);
-		//tickArray[3] = clockticks;
+		tickArray[9] = clockticks;
 		taskPrint();
 
 	}
@@ -121,25 +118,13 @@ void Task1(void *pdata) {
 
 	INT32U a = 1, b = 2;
 	INT32U i = 0;
-	//INT8U err;
-	//char txmsg;
-
-	//txmsg = 'A';
 	while (1) {
-		/*printf("task1 init\n");
-
-		OSMboxPost(TxMbox, (void *)&txmsg);
-		OSMboxPend(AckMbox, 0, &err);
-
-		txmsg++;
-
-		if(txmsg == 'Z'){
-			txmsg = 'A';
-		}*/
+		clockticks = 0;
+		clockticks += timerElapsed(1);
 
 		tickArray[0] = getTicks();
 
-		for (i = 0; i < 10000; i++) {
+		for (i = 0; i < 30000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -158,23 +143,14 @@ void Task2(void *pdata) {
 
 	INT32U a = 1, b = 2;
 	INT32U i = 0;
-	//INT8U err;
-	//char *rxmsg;
 
 	while (1) {
-		/*printf("task2 init\n");
 
-		rxmsg = (char *)OSMboxPend(TxMbox, 0, &err);
-		iprintf("rxmsg = %c\n",*rxmsg);
-
-		OSTimeDlyHMSM(0,0,0,200);
-		OSMboxPost(AckMbox, (void *)1);*/
-
-
+		clockticks += timerElapsed(1);
 
 		tickArray[3] = getTicks();
 
-		for (i = 0; i < 10000; i++) {
+		for (i = 0; i < 70000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -194,24 +170,22 @@ void Task3(void *pdata) {
 	INT32U i = 0;
 
 	while (1) {
-		//printf("task3 init\n");
-		tickArray[6] = getTicks();
-		for (i = 0; i < 5000000; i++) {
+		clockticks += timerElapsed(1);
 
+		tickArray[6] = getTicks();
+
+		for (i = 0; i < 90000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
-
-			/*if(task3interrupt > 0){
-				//printf("init\n");
-				loadStack2Reg();
-				task3interrupt--;
-			}*/
 		}
 		tickArray[7] = getTicks();
 		tickArray[8] = tickArray[7] - tickArray[6];
 
 		number3++;
+
+
+
 		OSTimeDly(1);
 	}
 }
@@ -228,22 +202,26 @@ void taskPrint(void) {
 			((tickArray[2] % TIMER_SPEED) * 1000000) / TIMER_SPEED,
 			(clockticks * 100) / (32728 / period)
 			);*/
-	/*iprintf("\x1b[3;0Htask1 init : %8d\tms\ntask1 exit : %8d\tms\ntask1 util : %8d\t%%\n"
-			"task2 init : %8d\tms\ntask2 exit : %8d\tms\ntask2 util : %8d\t%%\n"
-			"task3 init : %8d\tms\ntask3 exit : %8d\tms\ntask3 util : %8d\t%%\n"
-			"time : %8d\ttimes",
-			tickArray[0], tickArray[1], ((tickArray[2]*100)/(32728/period)),
-			tickArray[3], tickArray[4], ((tickArray[5]*100)/(32728/period)),
-			tickArray[6], tickArray[7], ((tickArray[8]*100)/(32728/period)),
-			number);*/
-	iprintf("\x1b[3;0H1 init : %5d exit : %5d\ntime : %d\n"
-			"2 init : %5d exit : %5d\ntime : %d\n"
-			"3 init : %5d exit : %5d\ntime : %d\n"
-			"total time : %d",
+	/*iprintf("\x1b[3;0Htask1 init : %8d\tms\ntask1 exit : %8d\tms\ntask1 time : %8d\tms\n\n"
+			"task2 init : %8d\tms\ntask2 exit : %8d\tms\ntask2 time : %8d\tms\n\n"
+			"task3 init : %8d\tms\ntask3 exit : %8d\tms\ntask3 time : %8d\tms\n\n",
+			((tickArray[0])*1000)/(32728), ((tickArray[1])*1000)/(32728), ((tickArray[2]*1000)/(32728)),
+			((tickArray[3])*1000)/(32728), ((tickArray[4])*1000)/(32728), ((tickArray[5]*1000)/(32728)),
+			((tickArray[6])*1000)/(32728), ((tickArray[7])*1000)/(32728), ((tickArray[8]*1000)/(32728))
+			);
+*/
+	iprintf("\x1b[3;0H1 init : %5d exit : %5d\ntimes : %d\n"
+			"2 init : %5d exit : %5d\ntimes : %d\n"
+			"3 init : %5d exit : %5d\ntimes : %d\n\n"
+			"timer call times : %d\n",
+			//"start : %d\n"
+			//"end   : %d",
 			tickArray[0], tickArray[1], number1,
 			tickArray[3], tickArray[4], number2,
 			tickArray[6], tickArray[7], number3,
 			number4);
+			//,tickArray[8],tickArray[9]);
+
 
 }
 
@@ -253,22 +231,6 @@ void timerCallBack() {			//OSTickISR 과 같은 역할을 하도록 수정?
 	number4++;
 	OSTimeTick();
 	OS_Sched();
-
-	/*
-	 * OSTickISR 실패
-	saveReg2Stack();
-	OSIntNesting++;
-	if(OSIntNesting == 1){
-		__asm__ __volatile__("LDR     R4, =OSTCBCur");
-		__asm__ __volatile__("LDR     R5, [R4]");
-		__asm__ __volatile__("STR     SP, [R5]");
-	}
-
-
-	OSTimeTick();
-	OSIntExit();
-	loadStack2Reg();
-*/
 
 }
 

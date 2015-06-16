@@ -96,7 +96,7 @@ void TaskStart(void *pdata) {
 		OSCtxSwCtr = 0;
 		OSTimeDly(1);
 		//tickArray[3] = clockticks;
-		//taskPrint();
+		taskPrint();
 
 	}
 
@@ -167,14 +167,16 @@ void Task3(void *pdata) {
 		printf("task3 init\n");
 		tickArray[6] = getTicks();
 		for (i = 0; i < 5000; i++) {
+
+			a = a * b;
+			a = a / b;
+			clockticks += timerElapsed(1);
+
 			/*if(task3interrupt > 0){
 				//printf("init\n");
 				loadStack2Reg();
 				task3interrupt--;
 			}*/
-			a = a * b;
-			a = a / b;
-			clockticks += timerElapsed(1);
 		}
 		tickArray[7] = getTicks();
 		tickArray[8] = tickArray[7] - tickArray[6];
@@ -218,27 +220,25 @@ void taskPrint(void) {
 void timerCallBack() {			//OSTickISR 과 같은 역할을 하도록 수정?
 	//현재 태스크의 모든 문맥을 스택에 저장
 	printf("called timerCallBack\n");
+	number4++;
+	OSTimeTick();
+	OS_Sched();
 
+	/*
+	 * OSTickISR 실패
 	saveReg2Stack();
 	OSIntNesting++;
-
-	//printf("1\n");
-
 	if(OSIntNesting == 1){
 		__asm__ __volatile__("LDR     R4, =OSTCBCur");
 		__asm__ __volatile__("LDR     R5, [R4]");
 		__asm__ __volatile__("STR     SP, [R5]");
 	}
-	//printf("2\n");
 
-	number4++;
+
 	OSTimeTick();
 	OSIntExit();
-	OS_Sched();
-
-
-	//loadStack2Reg();
-
+	loadStack2Reg();
+*/
 
 }
 

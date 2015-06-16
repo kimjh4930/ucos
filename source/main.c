@@ -22,6 +22,10 @@ OS_STK TaskStartStk[TASK_STK_SIZE];
 char TaskData[N_TASKS];
 OS_EVENT *RandomSem;
 
+//MessageBox
+OS_EVENT *AckMbox;
+OS_EVENT *TxMbox;
+
 int value[3];
 int tickArray[N_TASKS] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 int clockticks = 0;
@@ -83,17 +87,20 @@ void TaskStart(void *pdata) {
 
 	//irqInit();
 	//OSStatInit();
-	period = 1;
+	period = 5;
 
 	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(period), timerCallBack);
 	timerStart(1, ClockDivider_1024, 0, NULL);
+
+	AckMbox = OSMboxCreate((void *)0);
+	TxMbox = OSMboxCreate((void *)0);
 
 	TaskStartCreateTasks();
 
 	while (1) {
 		clockticks = 0;
 		clockticks += timerElapsed(1);
-		OSCtxSwCtr = 0;
+		//OSCtxSwCtr = 0;
 		OSTimeDly(1);
 		//tickArray[3] = clockticks;
 		taskPrint();
@@ -114,12 +121,25 @@ void Task1(void *pdata) {
 
 	INT32U a = 1, b = 2;
 	INT32U i = 0;
+	//INT8U err;
+	//char txmsg;
 
+	//txmsg = 'A';
 	while (1) {
-		printf("task1 init\n");
+		/*printf("task1 init\n");
+
+		OSMboxPost(TxMbox, (void *)&txmsg);
+		OSMboxPend(AckMbox, 0, &err);
+
+		txmsg++;
+
+		if(txmsg == 'Z'){
+			txmsg = 'A';
+		}*/
+
 		tickArray[0] = getTicks();
 
-		for (i = 0; i < 5000; i++) {
+		for (i = 0; i < 10000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -138,13 +158,23 @@ void Task2(void *pdata) {
 
 	INT32U a = 1, b = 2;
 	INT32U i = 0;
+	//INT8U err;
+	//char *rxmsg;
 
 	while (1) {
-		printf("task2 init\n");
+		/*printf("task2 init\n");
+
+		rxmsg = (char *)OSMboxPend(TxMbox, 0, &err);
+		iprintf("rxmsg = %c\n",*rxmsg);
+
+		OSTimeDlyHMSM(0,0,0,200);
+		OSMboxPost(AckMbox, (void *)1);*/
+
+
 
 		tickArray[3] = getTicks();
 
-		for (i = 0; i < 5000; i++) {
+		for (i = 0; i < 10000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -164,9 +194,9 @@ void Task3(void *pdata) {
 	INT32U i = 0;
 
 	while (1) {
-		printf("task3 init\n");
+		//printf("task3 init\n");
 		tickArray[6] = getTicks();
-		for (i = 0; i < 5000; i++) {
+		for (i = 0; i < 5000000; i++) {
 
 			a = a * b;
 			a = a / b;
@@ -219,7 +249,7 @@ void taskPrint(void) {
 
 void timerCallBack() {			//OSTickISR 과 같은 역할을 하도록 수정?
 	//현재 태스크의 모든 문맥을 스택에 저장
-	printf("called timerCallBack\n");
+	//printf("called timerCallBack\n");
 	number4++;
 	OSTimeTick();
 	OS_Sched();

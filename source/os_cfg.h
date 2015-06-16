@@ -19,7 +19,7 @@
 *********************************************************************************************************
 */
 
-#define OS_MAX_EVENTS             2    /* Max. number of event control blocks in your application ...  */
+#define OS_MAX_EVENTS             5    /* Max. number of event control blocks in your application ...  */
                                        /* ... MUST be > 0                                              */
 #define OS_MAX_FLAGS              5    /* Max. number of Event Flag Groups    in your application ...  */
                                        /* ... MUST be > 0                                              */
@@ -51,12 +51,12 @@
 
 
                                        /* -------------------- MESSAGE MAILBOXES --------------------- */
-#define OS_MBOX_EN                0    /* Enable (1) or Disable (0) code generation for MAILBOXES      */
-#define OS_MBOX_ACCEPT_EN         0    /*     Include code for OSMboxAccept()                          */
-#define OS_MBOX_DEL_EN            0    /*     Include code for OSMboxDel()                             */
-#define OS_MBOX_POST_EN           0    /*     Include code for OSMboxPost()                            */
+#define OS_MBOX_EN                1    /* Enable (1) or Disable (0) code generation for MAILBOXES      */
+#define OS_MBOX_ACCEPT_EN         1    /*     Include code for OSMboxAccept()                          */
+#define OS_MBOX_DEL_EN            1    /*     Include code for OSMboxDel()                             */
+#define OS_MBOX_POST_EN           1    /*     Include code for OSMboxPost()                            */
 #define OS_MBOX_POST_OPT_EN       0    /*     Include code for OSMboxPostOpt()                         */
-#define OS_MBOX_QUERY_EN          0    /*     Include code for OSMboxQuery()                           */
+#define OS_MBOX_QUERY_EN          1    /*     Include code for OSMboxQuery()                           */
 
 
                                        /* --------------------- MEMORY MANAGEMENT -------------------- */
@@ -72,14 +72,14 @@
 
 
                                        /* ---------------------- MESSAGE QUEUES ---------------------- */
-#define OS_Q_EN                   0    /* Enable (1) or Disable (0) code generation for QUEUES         */
-#define OS_Q_ACCEPT_EN            0    /*     Include code for OSQAccept()                             */
-#define OS_Q_DEL_EN               0    /*     Include code for OSQDel()                                */
-#define OS_Q_FLUSH_EN             0    /*     Include code for OSQFlush()                              */
-#define OS_Q_POST_EN              0    /*     Include code for OSQPost()                               */
-#define OS_Q_POST_FRONT_EN        0    /*     Include code for OSQPostFront()                          */
-#define OS_Q_POST_OPT_EN          0    /*     Include code for OSQPostOpt()                            */
-#define OS_Q_QUERY_EN             0    /*     Include code for OSQQuery()                              */
+#define OS_Q_EN                   1    /* Enable (1) or Disable (0) code generation for QUEUES         */
+#define OS_Q_ACCEPT_EN            1    /*     Include code for OSQAccept()                             */
+#define OS_Q_DEL_EN               1    /*     Include code for OSQDel()                                */
+#define OS_Q_FLUSH_EN             1    /*     Include code for OSQFlush()                              */
+#define OS_Q_POST_EN              1    /*     Include code for OSQPost()                               */
+#define OS_Q_POST_FRONT_EN        1    /*     Include code for OSQPostFront()                          */
+#define OS_Q_POST_OPT_EN          1    /*     Include code for OSQPostOpt()                            */
+#define OS_Q_QUERY_EN             1    /*     Include code for OSQQuery()                              */
 
 
                                        /* ------------------------ SEMAPHORES ------------------------ */

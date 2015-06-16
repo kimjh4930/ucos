@@ -34,6 +34,8 @@ int number2 = 0;
 int number3 = 0;
 int number4 = 0;
 
+volatile int task3interrupt = 0;
+
 void Task1(void *pdata);
 void Task2(void *pdata);
 void Task3(void *pdata);
@@ -42,6 +44,8 @@ void timerCallBack(void);
 void taskPrint(void);
 static void TaskStartCreateTasks(void);
 int getTicks(void);
+void saveReg2Stack(void);
+void loadStack2Reg(void);
 
 //---------------------------------------------------------------------------------
 int main(void) {
@@ -79,7 +83,7 @@ void TaskStart(void *pdata) {
 
 	//irqInit();
 	//OSStatInit();
-	period = 5;
+	period = 1;
 
 	timerStart(0, ClockDivider_1024, TIMER_FREQ_1024(period), timerCallBack);
 	timerStart(1, ClockDivider_1024, 0, NULL);
@@ -92,7 +96,7 @@ void TaskStart(void *pdata) {
 		OSCtxSwCtr = 0;
 		OSTimeDly(1);
 		//tickArray[3] = clockticks;
-		taskPrint();
+		//taskPrint();
 
 	}
 
@@ -112,9 +116,10 @@ void Task1(void *pdata) {
 	INT32U i = 0;
 
 	while (1) {
+		printf("task1 init\n");
 		tickArray[0] = getTicks();
 
-		for (i = 0; i < 100; i++) {
+		for (i = 0; i < 5000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -135,10 +140,11 @@ void Task2(void *pdata) {
 	INT32U i = 0;
 
 	while (1) {
+		printf("task2 init\n");
 
 		tickArray[3] = getTicks();
 
-		for (i = 0; i < 100; i++) {
+		for (i = 0; i < 5000; i++) {
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -158,8 +164,14 @@ void Task3(void *pdata) {
 	INT32U i = 0;
 
 	while (1) {
+		printf("task3 init\n");
 		tickArray[6] = getTicks();
-		for (i = 0; i < 5000000; i++) {
+		for (i = 0; i < 5000; i++) {
+			/*if(task3interrupt > 0){
+				//printf("init\n");
+				loadStack2Reg();
+				task3interrupt--;
+			}*/
 			a = a * b;
 			a = a / b;
 			clockticks += timerElapsed(1);
@@ -203,12 +215,75 @@ void taskPrint(void) {
 
 }
 
-void timerCallBack() {
+void timerCallBack() {			//OSTickISR 과 같은 역할을 하도록 수정?
+	//현재 태스크의 모든 문맥을 스택에 저장
+	printf("called timerCallBack\n");
+
+	saveReg2Stack();
+	OSIntNesting++;
+
+	//printf("1\n");
+
+	if(OSIntNesting == 1){
+		__asm__ __volatile__("LDR     R4, =OSTCBCur");
+		__asm__ __volatile__("LDR     R5, [R4]");
+		__asm__ __volatile__("STR     SP, [R5]");
+	}
+	//printf("2\n");
+
 	number4++;
 	OSTimeTick();
+	OSIntExit();
 	OS_Sched();
+
+
+	//loadStack2Reg();
+
+
 }
 
 int getTicks() {
 	return clockticks;
+}
+
+void saveReg2Stack(void){
+
+	__asm__ __volatile__("STR	LR,  [SP, #-4]!");
+	__asm__ __volatile__("STR	LR,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R12, [SP, #-4]!");
+	__asm__ __volatile__("STR	R11, [SP, #-4]!");
+	__asm__ __volatile__("STR	R10, [SP, #-4]!");
+	__asm__ __volatile__("STR	R9,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R8,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R7,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R6,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R5,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R4,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R3,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R2,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R1,  [SP, #-4]!");
+	__asm__ __volatile__("STR	R0,  [SP, #-4]!");
+	__asm__ __volatile__("MRS	R4,  CPSR");
+	__asm__ __volatile__("STR	R4,  [SP, #-4]!");
+}
+
+void loadStack2Reg(void){
+
+	__asm__ __volatile__("LDR	R4,  [SP], #4");
+	__asm__ __volatile__("MSR	CPSR_cxsf, R4");
+	__asm__ __volatile__("LDR	R0,  [SP], #4");
+	__asm__ __volatile__("LDR	R1,  [SP], #4");
+	__asm__ __volatile__("LDR	R2,  [SP], #4");
+	__asm__ __volatile__("LDR	R3,  [SP], #4");
+	__asm__ __volatile__("LDR	R4,  [SP], #4");
+	__asm__ __volatile__("LDR	R5,  [SP], #4");
+	__asm__ __volatile__("LDR	R6,  [SP], #4");
+	__asm__ __volatile__("LDR	R7,  [SP], #4");
+	__asm__ __volatile__("LDR	R8,  [SP], #4");
+	__asm__ __volatile__("LDR	R9,  [SP], #4");
+	__asm__ __volatile__("LDR	R10, [SP], #4");
+	__asm__ __volatile__("LDR	R11, [SP], #4");
+	__asm__ __volatile__("LDR	R12, [SP], #4");
+	__asm__ __volatile__("LDR	LR,  [SP], #4");
+	__asm__ __volatile__("LDR	PC,  [SP], #4");
 }
